@@ -8,6 +8,7 @@ export type ProductType = {
     title: string,
     price: number,
     count: number
+    urlImg: string
 };
 
 const initialState: Array<ProductType> = [];
@@ -51,7 +52,7 @@ export const addProductsTC = (products: ProductType) => {
         // write new count and read count
         productItem.transaction(function (currentCount) {
             return currentCount + 1
-        })
+        }).then(value => console.log('add'))
         // read all products
         ref.on('value', (snapshot) => {
             // dispatch all products !!
@@ -69,7 +70,7 @@ export const deleteProductsTC = (products: ProductType) => {
         // write new count and read count
         productItem.transaction(function (currentCount) {
             return currentCount - 1
-        })
+        }).then(value => console.log('delete'))
         // read all products
         ref.on('value', (snapshot) => {
             // dispatch all products !!

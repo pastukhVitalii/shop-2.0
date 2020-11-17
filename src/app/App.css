@@ -2,3 +2,7 @@ body{
     background-size: cover;
     background-position: center;
 }
+
+.App {
+    margin-bottom: 20px;
+}

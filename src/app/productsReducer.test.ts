@@ -1,7 +1,4 @@
-export let a =33;
-/*
-import {productsReducer, ProductType} from "./productsReducer";
-import {addProductAC} from './productsReducer'
+/*import {addProductAC, productsReducer, ProductType} from "./productsReducer";
 
 let startState: Array<ProductType> = [];
 
@@ -13,5 +10,16 @@ beforeEach(() => {
 })
 
 test('count should be 1', () => {
-    const action = productsReducer(startState, addProductAC({products: startState}))
+    // const action = productsReducer(startState, addProductAC({products: startState}));
+
+    const endState = productsReducer(startState, addProductAC({products: startState}));
+    expect(endState[0].count)
+} );
+
+test('get products', () => {
+    // const action = productsReducer(startState, addProductAC({products: startState}));
+
+    const endState = productsReducer(startState, addProductAC({products: startState}));
+    expect(endState[0])
 } )*/
+export let s = 32;

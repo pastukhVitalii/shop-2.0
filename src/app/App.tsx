@@ -1,6 +1,6 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './App.css';
-import {Container} from "@material-ui/core";
+import {CircularProgress, Container, Grid} from "@material-ui/core";
 import {Header} from "../components/Header/Header";
 import {Route} from 'react-router-dom';
 import {Shop} from "../features/Shop/Shop";
@@ -16,12 +16,11 @@ function App() {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getProductsTC())
+        dispatch(getProductsTC());
+        setTimeout(() => {
+            setLoading(false);
+        }, 500)
     }, [dispatch]);
-
-   /* const changeStatus = useCallback((checked: boolean, roleId: string, checkboxId: string) => {
-        dispatch(actions.checkCheckboxAC(checked, roleId, checkboxId))
-    }, [dispatch]);*/
 
     const addProduct = useCallback(function (products: ProductType) {
         const thunk = addProductsTC(products)
@@ -38,19 +37,24 @@ function App() {
         return sum + pr
     }, 0);
 
+    let [loading, setLoading] = useState(true);
+    console.log(`loading ${loading}`)
     return (
-        <div className="App">
-            <Header totalPrice={totalPrice} />
+        <div>
+            <Header totalPrice={totalPrice}/>
             <Container fixed>
-                <Route exact path={'/'} render={() =>
-                    <Shop products={products}
-                          addProducts={addProduct}/>}
-                />
-                <Route exact path={'/shoppingCart'} render={() =>
-                    <ShoppingCart products={products.filter(p => p.count > 0)}
-                                  addProducts={addProduct}
-                                  deleteProducts={deleteProducts}/>}
-                />
+                {loading ? <Grid container justify='center'><CircularProgress/></Grid> :
+                    <>
+                        <Route exact path={'/'} render={() =>
+                            <Shop products={products}
+                                  addProducts={addProduct}/>}
+                        />
+                        <Route exact path={'/shoppingCart'} render={() =>
+                            <ShoppingCart products={products.filter(p => p.count > 0)}
+                                          addProducts={addProduct}
+                                          deleteProducts={deleteProducts}/>}
+                        />
+                    </>}
             </Container>
         </div>
     );

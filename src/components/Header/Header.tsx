@@ -18,7 +18,8 @@ export const Header = React.memo(function (props: PropsType) {
             root: {
                 width: '100%',
                 height: '100%',
-                backgroundColor: 'blanchedalmond'
+                backgroundColor: 'blanchedalmond',
+                marginBottom: '20px'
             },
         });
         const [value, setValue] = React.useState(0);
@@ -43,7 +44,8 @@ export const Header = React.memo(function (props: PropsType) {
                         <NavLink to={'/'}>
                             <BottomNavigationAction label="Main page" icon={<HomeIcon/>} style={{height: '100%'}}/>
                         </NavLink>
-                        <div>{props.totalPrice || true}
+                        <div>
+                            {props.totalPrice? <span>{props.totalPrice} $</span>: ''}
                             <NavLink to={'/shoppingCart'}>
                                 <BottomNavigationAction  label="Shopping Cart" icon={<ShoppingCart/>}/>
                             </NavLink>

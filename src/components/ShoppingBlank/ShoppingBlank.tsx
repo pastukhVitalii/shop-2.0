@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
         },
         media: {
             height: '100%',
-            backgroundColor: 'red'
+            margin: '0 auto',
         },
     }),
 );
@@ -54,10 +54,10 @@ export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
     return (
         <Card className={classes.root}>
             <Grid container>
-                <Grid item xs={3}>
+                <Grid item xs={4}>
                     <CardMedia
                         className={classes.media}
-                        image="/static/images/cards/paella.jpg"
+                        image={props.products.urlImg}
                         title={props.products.title}
                     />
                 </Grid>
@@ -75,7 +75,7 @@ export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
                         </Typography>
                     </CardContent>
                 </Grid>
-                <Grid container item xs={4}>
+                <Grid container item xs={3}>
                     <Grid container justify={'center'}>
                         <CardActions>
                             <IconButton onClick={onDeleteItem} disabled={!props.products.count}>

@@ -21,8 +21,9 @@ const useStyles = makeStyles((theme: Theme) =>
             maxWidth: 345,
         },
         media: {
-            height: 0,
-            paddingTop: '56.25%',
+            width: '60%',
+            margin: '0 auto',
+            height: '170px',
         },
     }),
 );
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
 export type PropsType = {
     products: ProductType,
     addProducts: (products: ProductType) => void
+    setAlert: (alert: boolean) => void
 }
 export type CardType = {
     onAddItem?: () => void,
@@ -45,22 +47,25 @@ export const MyCard = React.memo(function (props: PropsType & CardType) {
 
         let onAddItem = () => {
             props.addProducts(props.products);
+            props.setAlert(true);
+            setTimeout(() => {
+                props.setAlert(false);
+            }, 1500);
         }
         return (
             <Card className={classes.root}>
                 <CardHeader
                     title={props.products.title}
-                    // subheader="September 14, 2016"
                 />
                 <CardMedia
                     className={classes.media}
-                    image="/static/images/cards/paella.jpg"
+                    image={props.products.urlImg}
                     title={props.products.title}
                 />
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
                         This impressive paella is a perfect party dish and a fun meal to cook together with your
-                        guests. Add 1 cup of frozen peas along with the mussels, if you like.ddsdsdsdddd
+                        guests. Add 1 cup of frozen peas along with the mussels, if you like.
                     </Typography>
                 </CardContent>
                 <CardActions>

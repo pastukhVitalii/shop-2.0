@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './Shop.css';
-import {Grid, Paper} from "@material-ui/core";
+import {Collapse, Grid, Paper} from "@material-ui/core";
 import {MyCard} from "../../components/Card/Card";
 import {ProductType} from "../../app/productsReducer";
+import {Alert} from "@material-ui/lab";
 
 type PropsType = {
     products: Array<ProductType>,
@@ -10,17 +11,24 @@ type PropsType = {
 }
 
 export const Shop = React.memo(function (props: PropsType) {
-    console.log('render Shop')
+    console.log('render Shop');
+
+    let [alert, setAlert] = useState(false);
 
     return (
-        <Grid container spacing={1} justify='center'>
-            {props.products.map(p => {
-                return <Paper key={p.id}
-                              style={{backgroundColor: 'blue', margin: '30px', width: '300px', height: '400px'}}>
-                    <MyCard products={p} addProducts={props.addProducts}/>
-                </Paper>
-            })}
-        </Grid>
+        <>
+            <Collapse in={alert}>
+                <Alert onClose={() => setAlert(false)}>In cart!</Alert>
+            </Collapse>
+            <Grid container spacing={1} justify='center'>
+                {props.products.map(p => {
+                    return <Paper key={p.id}
+                                  style={{backgroundColor: 'blue', margin: '30px', width: '300px', height: '400px'}}>
+                        <MyCard products={p} addProducts={props.addProducts} setAlert={setAlert}/>
+                    </Paper>
+                })}
+            </Grid>
+        </>
     );
 })
 

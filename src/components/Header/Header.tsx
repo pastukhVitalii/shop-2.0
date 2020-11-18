@@ -32,7 +32,6 @@ export const Header = React.memo(function (props: PropsType) {
                     onChange={(event, newValue) => {
                         setValue(newValue);
                     }}
-                    showLabels
                     color="primary"
                     className={classes.root}
                 >

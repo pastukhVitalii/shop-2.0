@@ -6,8 +6,9 @@ import reportWebVitals from './reportWebVitals';
 import {store} from "./app/store";
 import {Provider} from "react-redux";
 import {BrowserRouter} from "react-router-dom";
-import firebase from "firebase";
-// import * as firebase from 'firebase';
+import firebase from "firebase/app";
+import 'firebase/database';
+import 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCyp1Pz2WeJIcMlqCAUZm8AyLhsu8RsGfk",

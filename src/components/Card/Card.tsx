@@ -64,8 +64,8 @@ export const MyCard = React.memo(function (props: PropsType & CardType) {
                 />
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        This impressive paella is a perfect party dish and a fun meal to cook together with your
-                        guests. Add 1 cup of frozen peas along with the mussels, if you like.
+                        We is passionate about technology and driven by innovation.
+                        We dream, we dare and we strive to create an effortless and joyful digital life for everyone.
                     </Typography>
                 </CardContent>
                 <CardActions>

@@ -4,13 +4,6 @@ const instance = axios.create({
     baseURL: 'https://shop2-828f9.firebaseio.com/'
 })
 
-/*type CommonApiType<T> = {
-    resultCode: 0| 1 | 100
-    messages: Array<string>
-    data: T,
-
-}*/
-
 export const api = {
 
     /*createTodolist(title: string) {

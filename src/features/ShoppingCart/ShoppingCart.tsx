@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import './ShoppingCart.css';
 import {Grid} from "@material-ui/core";
 import {ShoppingBlank} from "../../components/ShoppingBlank/ShoppingBlank";
@@ -13,10 +13,11 @@ type PropsType = {
 
 export const ShoppingCart = React.memo(function (props: PropsType) {
     console.log('render Shopping Cart')
-    const products = props.products.map(p => <ShoppingBlank key={p.id} products={p}
-                                                            addProducts={props.addProducts}
-                                                            deleteProducts={props.deleteProducts}/>)
-
+    const products = useMemo(() => {
+        return props.products.map(p => <ShoppingBlank key={p.id} products={p}
+                                                      addProducts={props.addProducts}
+                                                      deleteProducts={props.deleteProducts}/>)
+    }, [props.products])
     return (
         <Grid container spacing={4} justify={'center'}>
             <Grid item xs={12} md={8} lg={7}>

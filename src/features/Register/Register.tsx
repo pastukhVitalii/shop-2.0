@@ -1,11 +1,14 @@
-import React, {useCallback, useEffect, useState} from "react";
-import {Input} from "../../components/common/input/Input";
-import {Button} from "../../components/common/button/Button";
+import React, { useCallback, useEffect, useState } from "react";
 import firebase from "firebase";
-import {NavLink, withRouter} from "react-router-dom";
-import '../../../App.scss';
+import { withRouter } from "react-router-dom";
+import { Field, reduxForm } from "redux-form";
+import { email, maxLengthCreator, number, required } from "../../components/Form/validators";
+import { renderTextField } from "../../components/Form/RenderTextField";
+import { Button } from "@material-ui/core";
 
-const Register = React.memo((props: any) => {
+const maxLength10 = maxLengthCreator(10);
+
+const RegisterForm = React.memo((props: any) => {
 
     console.log('register page');
 
@@ -14,57 +17,71 @@ const Register = React.memo((props: any) => {
         console.log(db)
     })
 
-    const [firsName, setFirsName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState(''); //test001@gmail.com
-    const [pass, setPass] = useState(''); //test001
+    const { handleSubmit } = props
 
-    const setFirstNameCallback = useCallback((e) => {
-        setFirsName(e.currentTarget.value)
-        console.log('name', e.currentTarget.value)
-    }, []);
-
-    const setLastNameCallback = useCallback((e) => {
-        setLastName(e.currentTarget.value)
-    }, []);
-
-    const setEmailCallback = useCallback((e) => {
-        setEmail(e.currentTarget.value)
-    }, []);
-    console.log(email);
-    const setPasswordCallback = useCallback((e) => {
-        setPass(e.currentTarget.value)
-    }, []);
-
-    const signUpCallback = () => {
-        const name = {
-            firsName,
-            lastName,
-            time: {
-                desktop: 0,
-                mobile: 0
-            }
-        }
-        firebase.auth().createUserWithEmailAndPassword(email, pass)
-            .then(res => firebase.database().ref(`users/${firebase.auth().currentUser?.uid}`).set(name))
-            .then( res => props.history.replace('/timers'))
-            .catch((error: string) => alert(error));
+    const handleScroll = (e: any) => {
+        alert(e.target)
     }
+    // const signUpCallback = () => {
+    //     const name = {
+    //         firsName,
+    //         lastName,
+    //         time: {
+    //             desktop: 0,
+    //             mobile: 0
+    //         }
+    //     }
+    //     firebase.auth().createUserWithEmailAndPassword(email, pass)
+    //         .then(res => firebase.database().ref(`users/${firebase.auth().currentUser?.uid}`).set(name))
+    //         .then( res => props.history.replace('/timers'))
+    //         .catch((error: string) => alert(error));
+    // }
 
     return (
         <div className={'main'}>
-            <div className={'title'}>Register</div>
-            <div className={'form'}>
-                <Input type={''} placeholder={'First name'} value={firsName} onChange={setFirstNameCallback}/>
-                <Input type={''} placeholder={'Last name'} value={lastName} onChange={setLastNameCallback}/>
-                <Input type={''} placeholder={'Email'} value={email} onChange={setEmailCallback}/>
-                <Input type={''} placeholder={'Password'} value={pass} onChange={setPasswordCallback}/>
-            </div>
-            <Button type={''} name={'Register'} spinner={false} disable={false} onClick={signUpCallback}/>
-            <div className={'secondary_title'}>Already registered? <NavLink className={'link'}
-                                                                            to={'/login'}> Log in</NavLink></div>
+            <form onSubmit={handleSubmit} onScroll={handleScroll}>
+                <Field name="firstName" component={renderTextField} label="First Name"
+                    validate={[required, maxLength10]} />
+                <Field name="lastName" component={renderTextField} label="Last Name"
+                    validate={[required, maxLength10]} />
+                <Field name="email" component={renderTextField} label="Email"
+                    validate={[required, email]} />
+                <Field name="pass" component={renderTextField} label="Password"
+                    validate={[required, maxLength10, number]} />
+                <Button variant="contained" color="primary" type="submit"
+                    style={{ 'margin': '20px ', 'width': 'calc(100% - 40px)' }}>
+                    Send
+            </Button>
+            </form>
         </div>
     );
+});
+
+const RegisterReduxForm = reduxForm<RegisterType>({ form: 'Register' })(RegisterForm);
+
+type RegisterType = {
+        email: string
+        pass: string
+        firstName: string
+        lastName: string
+}
+
+
+export const Register = React.memo(function (props: any) {
+
+    const onSubmit = (data: RegisterType) => {
+        console.log(data);
+
+        firebase.auth().createUserWithEmailAndPassword(data.email, data.pass)
+            .then(res => firebase.database().ref(`users/${firebase.auth().currentUser?.uid}`).set(data))
+            .then(res => props.history.replace('/shoppingCart'))
+            .catch((error: string) => alert(error));
+        alert(data.email);
+    }
+
+    return (
+        <RegisterReduxForm onSubmit={onSubmit} />
+    )
 });
 
 export default withRouter(Register);

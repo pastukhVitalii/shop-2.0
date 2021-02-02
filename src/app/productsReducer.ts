@@ -37,6 +37,7 @@ export const productsReducer = slice.reducer;
 export const getProductsTC = () => {
     return (dispatch: Dispatch<any>) => {
         ref.on('value', (snapshot) => {
+            console.log(snapshot.val());
             dispatch(getProductsAC(snapshot.val()))
         })
     }
@@ -52,12 +53,12 @@ export const addProductsTC = (products: ProductType) => {
         // write new count and read count
         productItem.transaction(function (currentCount) {
             return currentCount + 1
-        }).then(value => console.log('add'))
+        })/*.then(value => console.log('add'))
         // read all products
         ref.on('value', (snapshot) => {
             // dispatch all products !!
             dispatch(addProductAC(snapshot.val()))
-        })
+        })*/
     }
 };
 export const deleteProductsTC = (products: ProductType) => {
@@ -70,11 +71,12 @@ export const deleteProductsTC = (products: ProductType) => {
         // write new count and read count
         productItem.transaction(function (currentCount) {
             return currentCount - 1
-        }).then(value => console.log('delete'))
+        })/*.then(value => console.log({value}, 'delete'))*/
         // read all products
-        ref.on('value', (snapshot) => {
+        /*ref.on('child_removed', (snapshot) => {
+            debugger
             // dispatch all products !!
-            dispatch(deleteProductAC(snapshot.val()))
-        })
+            dispatch(deleteProductAC(snapshot.val()))*/
+
     }
 };

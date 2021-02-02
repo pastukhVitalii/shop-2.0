@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {FormEvent, useState} from 'react';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import {ShoppingCart} from "@material-ui/icons";
 import HomeIcon from '@material-ui/icons/Home';
 import './Header.css';
-import {Grid} from "@material-ui/core";
+import {Button, Grid} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {NavLink} from "react-router-dom";
 
@@ -44,9 +44,9 @@ export const Header = React.memo(function (props: PropsType) {
                             <BottomNavigationAction label="Main page" icon={<HomeIcon/>} style={{height: '100%'}}/>
                         </NavLink>
                         <div>
-                            {props.totalPrice? <span>{props.totalPrice} $</span>: ''}
+                            {props.totalPrice ? <span>{props.totalPrice} $</span> : ''}
                             <NavLink to={'/shoppingCart'}>
-                                <BottomNavigationAction  label="Shopping Cart" icon={<ShoppingCart/>}/>
+                                <BottomNavigationAction label="Shopping Cart" icon={<ShoppingCart/>}/>
                             </NavLink>
                         </div>
                     </Grid>

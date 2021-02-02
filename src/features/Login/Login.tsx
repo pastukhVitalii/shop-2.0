@@ -1,46 +1,59 @@
-import React, {useCallback, useState} from "react";
-import {Input} from "../../components/common/input/Input";
-import {Button} from "../../components/common/button/Button";
+import React, { useCallback, useState } from "react";
 import firebase from "firebase";
-import {NavLink, withRouter} from "react-router-dom";
-import '../../../App.scss';
+import { Redirect, withRouter } from "react-router-dom";
+import { Field, reduxForm } from "redux-form";
+import { renderTextField } from "../../components/Form/RenderTextField";
+import { email, maxLengthCreator, number, required } from "../../components/Form/validators";
+import { Button } from "@material-ui/core";
 
-const Login = React.memo((props: any) => {
+const maxLength10 = maxLengthCreator(10);
 
-    console.log('login page');
+const LoginForm = React.memo((props: any) => {
 
-    const [email, setEmail] = useState('');
-    const [pass, setPass] = useState('');
+	console.log('login page');
 
-    const setEmailCallback = useCallback((e) => {
-        setEmail(e.currentTarget.value)
-    }, []);
+	const { handleSubmit } = props
 
-    const setPasswordCallback = useCallback((e) => {
-        setPass(e.currentTarget.value)
-    }, []);
+	const handleScroll = (e: any) => {
+		alert(e.target)
+	}
 
-    const signInCallback = useCallback(() => {
-        firebase.auth().signInWithEmailAndPassword(email, pass)
-            .then(res => props.history.replace('/timers'))
-            .catch(error => alert(error))
-    }, [props.setAuth, email, pass]);
-
-    return (
-        <>
-            <div className={'main'}>
-                <div className={'title'}>Login</div>
-                <div className={'form'}>
-                    <Input type={''} placeholder={'Email'} value={email} onChange={setEmailCallback}/>
-                    <Input type={''} placeholder={'Password'} value={pass} onChange={setPasswordCallback}/>
-                </div>
-                <Button type={''} name={'Login'} spinner={false} disable={false} onClick={signInCallback}/>
-                <div className={'secondary_title'}>Don’t have an account yet? <NavLink className={'link'}
-                                                                                       to={'/register'}> Register</NavLink>
-                </div>
-            </div>
-        </>
-    );
+	return (
+		<div className={'main'}>
+			<form onSubmit={handleSubmit} onScroll={handleScroll}>
+				<Field name="email" component={renderTextField} label="Email"
+					validate={[required, email]} />
+				<Field name="pass" component={renderTextField} label="Password"
+					validate={[required, maxLength10, number]} />
+				<Button variant="contained" color="primary" type="submit"
+					style={{ 'margin': '20px ', 'width': 'calc(100% - 40px)' }}>
+					Send
+			  </Button>
+			</form>
+		</div>
+	);
 });
 
-export default withRouter(Login)
+const LoginReduxForm = reduxForm<LoginType>({ form: 'login' })(LoginForm);
+
+type LoginType = {
+	email: string
+	pass: string
+}
+
+export const Login = React.memo(function (props: any) {
+
+	const onSubmit = (data: LoginType) => {
+		if (firebase.auth().currentUser) {
+			firebase.auth().signInWithEmailAndPassword(data.email, data.pass)
+				.then(res => props.history.replace("/shoppingCart"))
+				.catch(error => alert(error))
+		}
+	}
+
+	return (
+		<LoginReduxForm onSubmit={onSubmit} />
+	)
+});
+
+export default withRouter(Login);

@@ -1,21 +1,42 @@
-import axios from "axios";
+import firebase from 'firebase';
+import {ProductType} from '../BLL-redux/productsReducer';
 
-const instance = axios.create({
-    baseURL: 'https://shop2-828f9.firebaseio.com/'
-})
+import {ref} from '../index';
+import {LoginType} from '../scenes/Login';
 
 export const api = {
+  getProducts() {
+    return new Promise((res) => {
+      ref.on('value', (snapshot) => {
+        res(snapshot.val());
+      });
+    });
+  },
+  addProducts(product: ProductType) {
+    const db = firebase.database();
+    const productId = product.id; // get id product
+    // path to count
+    const productItem = db.ref(`products/${productId}/count`);
+    // write new count and read count
+    return productItem.transaction(function (currentCount) {
+      return currentCount + 1;
+    });
+  },
+deleteProducts(product: ProductType) {
+    const db = firebase.database();
+    const productId = product.id; // get id product
+    // path to count
+    const productItem = db.ref(`products/${productId}/count`);
+    // write new count and read count
+    return productItem.transaction(function (currentCount) {
+      return currentCount - 1;
+    });
+  },
 
-    /*createTodolist(title: string) {
-        return instance.post<CommonApiType<{ item: TodoType }>>("todo-lists", {title: title})
-            .then(res => res.data);
-    },*/
-    /*updateTitleTodolist(title: string, todolistId: string) {
-        return instance.put(`/todo-lists/${todolistId}/`, {title: title})
-            .then(res => res.data);
-    },*/
-    getProducts() {
-        return instance.get("/")
-            .then(res => res.data)
-    },
-}
+  login(data: LoginType) {
+    return firebase.auth().signInWithEmailAndPassword(data.email, data.pass);
+  },
+  logout() {
+    return firebase.auth().signOut();
+  },
+};

@@ -2,14 +2,13 @@ import React, {useCallback, useEffect} from 'react';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import {ShoppingCart} from "@material-ui/icons";
 import HomeIcon from '@material-ui/icons/Home';
-import './Header.css';
 import {Button, Grid, IconButton} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../../app/store";
+import {AppRootStateType} from "../../BLL-redux/store";
 import firebase from "firebase";
-import {logoutTC} from "../../features/Login/auth-reducer";
+import {logoutTC} from "../../BLL-redux/auth-reducer";
 
 type PropsType = {
   totalPrice: number
@@ -30,7 +29,7 @@ export const Header = React.memo(function (props: PropsType) {
     });
 
     const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn);
-  console.log(isLoggedIn)
+    console.log(isLoggedIn)
     const [userName, setUserName] = React.useState('');
 
     const dispatch = useDispatch();
@@ -52,7 +51,7 @@ export const Header = React.memo(function (props: PropsType) {
     const logOutCallback = useCallback(() => {
       setUserName('');
       dispatch(logoutTC())
-    }, []);
+    }, [dispatch]);
     return (
       <div>
         <BottomNavigation

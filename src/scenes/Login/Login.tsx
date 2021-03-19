@@ -4,9 +4,9 @@ import {Field, reduxForm} from "redux-form";
 import {renderTextField} from "../../components/Form/RenderTextField";
 import {email, maxLengthCreator, number, required} from "../../components/Form/validators";
 import {Button} from "@material-ui/core";
-import {AppRootStateType} from "../../app/store";
+import {AppRootStateType} from "../../BLL-redux/store";
 import {useDispatch, useSelector} from "react-redux";
-import {loginTC} from "./auth-reducer";
+import {loginTC} from "../../BLL-redux/auth-reducer";
 
 const maxLength10 = maxLengthCreator(10);
 

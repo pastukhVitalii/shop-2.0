@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import {ProductType} from '../../app/productsReducer';
+import {ProductType} from '../../BLL-redux/productsReducer';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -38,7 +38,7 @@ export type CardType = {
     onDeleteItem?: () => void,
 }
 
-export const MyCard = React.memo(function (props: PropsType & CardType) {
+export const CardBlank = React.memo(function (props: PropsType & CardType) {
         console.log('render Card')
         const inCart = props.products.count > 0;
         const color = inCart ? 'secondary' : 'primary';

@@ -13,7 +13,7 @@ import {
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {Add, Remove} from "@material-ui/icons";
-import {ProductType} from "../../app/productsReducer";
+import {ProductType} from "../../BLL-redux/productsReducer";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({

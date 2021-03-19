@@ -2,13 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import { store } from "./app/store";
+import { store } from "./BLL-redux/store";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import firebase from "firebase/app";
 import "firebase/database";
 import "firebase/firestore";
-import AppShop from "./features/AppShop/AppShop";
+import {AppShop} from "./scenes/AppShop";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCyp1Pz2WeJIcMlqCAUZm8AyLhsu8RsGfk",

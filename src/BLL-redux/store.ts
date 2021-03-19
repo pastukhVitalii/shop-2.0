@@ -3,7 +3,7 @@ import {productsReducer} from "./productsReducer";
 import {configureStore} from "@reduxjs/toolkit";
 import thunkMiddleware from 'redux-thunk';
 import {reducer as formReducer} from 'redux-form'
-import {authReducer} from "../features/Login/auth-reducer";
+import {authReducer} from "./auth-reducer";
 
 const rootReducer = combineReducers({
   products: productsReducer,

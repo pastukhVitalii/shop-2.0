@@ -1,40 +1,38 @@
-import {Dispatch} from 'redux'
-import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import firebase from "firebase";
-import {LoginType} from "./Login";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {Dispatch} from 'redux';
+import {api} from '../api/api';
+import {LoginType} from '../scenes/Login';
 
 const initialState = {
-  isLoggedIn: false
-}
+  isLoggedIn: false,
+};
 
 const slice = createSlice({
   name: 'auth',
   initialState: initialState,
   reducers: {
     setIsLoggedInAC(state, action: PayloadAction<{ value: boolean }>) {
-      state.isLoggedIn = action.payload.value
-    }
-  }
-})
+      state.isLoggedIn = action.payload.value;
+    },
+  },
+});
 
 export const authReducer = slice.reducer;
 export const {setIsLoggedInAC} = slice.actions;
 
 // thunks
 export const loginTC = (data: LoginType) => (dispatch: Dispatch) => {
-
-  firebase.auth().signInWithEmailAndPassword(data.email, data.pass)
-    .then(res => {
+  api.login(data)
+    .then((res) => {
       dispatch(setIsLoggedInAC({value: true}));
     })
-    .catch(error => alert(error))
-}
+    .catch((error) => alert(error));
+};
 
 export const logoutTC = () => (dispatch: Dispatch) => {
-  firebase.auth().signOut()
+  api.logout()
     .then((res) => {
-      dispatch(setIsLoggedInAC({value: false}))
+      dispatch(setIsLoggedInAC({value: false}));
     })
-    .catch(error => alert(error))
-}
-
+    .catch((error) => alert(error));
+};

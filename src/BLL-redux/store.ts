@@ -1,9 +1,13 @@
-import {combineReducers} from "redux";
-import {productsReducer} from "./productsReducer";
-import {configureStore} from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers } from "redux";
+import { reducer as formReducer } from 'redux-form';
 import thunkMiddleware from 'redux-thunk';
-import {reducer as formReducer} from 'redux-form'
-import {authReducer} from "./auth-reducer";
+
+
+
+import { authReducer } from "./auth-reducer";
+import { productsReducer } from "./productsReducer";
+
 
 const rootReducer = combineReducers({
   products: productsReducer,
@@ -15,7 +19,11 @@ export type RootReducerType = typeof rootReducer
 
 export const store = configureStore({
   reducer: rootReducer,
-  middleware: getDefaultMiddleware => getDefaultMiddleware().prepend(thunkMiddleware)
+  middleware: getDefaultMiddleware => getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: ['products/addProductAC', 'products/deleteProductAC']
+    }
+  }).prepend(thunkMiddleware)
 })
 
 // определить автоматически тип всего объекта состояния

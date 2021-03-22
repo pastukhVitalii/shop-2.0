@@ -39,10 +39,8 @@ export const ShoppingCart = React.memo(function (props: PropsType) {
   );
 
   const productsF = products.filter((p) => {
-    if (p.count > 0) {
-      return true;
-    } 
-    return false;
+    return p.count > 0; 
+
   });
 
   const productsM = productsF.map((p) => {
@@ -62,7 +60,7 @@ export const ShoppingCart = React.memo(function (props: PropsType) {
         {productsM}
       </Grid>
       <Grid item xs={12} md={4} lg={3}>
-        <Form products={productsF} />
+        {/*<Form products={productsF} />*/}
       </Grid>
     </Grid>
   );

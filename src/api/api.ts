@@ -1,8 +1,8 @@
 import firebase from 'firebase';
-import {ProductType} from '../BLL-redux/productsReducer';
 
-import {ref} from '../index';
-import {LoginType} from '../scenes/Login';
+import { ProductType } from '../BLL-redux/productsReducer';
+import { ref } from '../index';
+import { LoginType } from '../scenes/Login';
 
 export const api = {
   getProducts() {
@@ -22,7 +22,7 @@ export const api = {
       return currentCount + 1;
     });
   },
-deleteProducts(product: ProductType) {
+  deleteProducts(product: ProductType) {
     const db = firebase.database();
     const productId = product.id; // get id product
     // path to count

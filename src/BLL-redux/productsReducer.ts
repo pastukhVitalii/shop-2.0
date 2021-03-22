@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Dispatch} from 'redux';
 import {api} from "../api/api";
+import {ref} from '../index';
 
 export type ProductType = {
   id: string;
@@ -19,7 +20,7 @@ export const slice = createSlice({
   initialState: initialState,
   reducers: {
     addProductAC(state, action: PayloadAction<{ products: Array<ProductType> }>) {
-      return state = {...action.payload.products};
+      return action.payload.products;
     },
     deleteProductAC(state, action: PayloadAction<{ products: Array<ProductType> }>) {
       return action.payload.products;
@@ -33,22 +34,22 @@ export const slice = createSlice({
 export const {addProductAC, deleteProductAC, getProductsAC} = slice.actions;
 export const productsReducer = slice.reducer;
 
-/*export const getProductsTC = () => {
+export const getProductsTC = () => {
   return (dispatch: Dispatch<any>) => {
     ref.on('value', (snapshot) => {
       console.log(snapshot.val());
       dispatch(getProductsAC(snapshot.val()))
     })
   }
-};*/
+};
 
-export const getProductsTC = () => (dispatch: Dispatch) => {
+/*export const getProductsTC = () => (dispatch: Dispatch) => {
   api.getProducts()
     .then((res: any) => {
       dispatch(getProductsAC(res));
     })
     .catch((error) => alert(error));
-};
+};*/
 
 export const addProductsTC = (products: ProductType) => (dispatch: Dispatch) => {
   api.addProducts(products)

@@ -1,12 +1,23 @@
-import React from "react";
-import {NavLink, Redirect, withRouter} from "react-router-dom";
-import {Field, reduxForm} from "redux-form";
-import {renderTextField} from "../../components/Form/RenderTextField";
-import {email, maxLengthCreator, number, required} from "../../components/Form/validators";
-import {Button} from "@material-ui/core";
-import {AppRootStateType} from "../../BLL-redux/store";
-import {useDispatch, useSelector} from "react-redux";
-import {loginTC} from "../../BLL-redux/auth-reducer";
+import { Button } from "@material-ui/core";
+import firebase from 'firebase';
+import React, {useState} from "react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink, Redirect, withRouter } from "react-router-dom";
+import { Field, reduxForm } from "redux-form";
+
+
+
+import { loginTC } from "../../BLL-redux/auth-reducer";
+import { AppRootStateType } from "../../BLL-redux/store";
+import { renderTextField } from "../../components/Form/RenderTextField";
+import {
+  email,
+  maxLengthCreator,
+  number,
+  required,
+} from '../../components/Form/validators';
+
 
 const maxLength10 = maxLengthCreator(10);
 
@@ -19,6 +30,18 @@ const LoginForm = React.memo((props: any) => {
   const handleScroll = (e: any) => {
     alert(e.target)
   }
+
+  /*const [user, setUser] = useState<any>();
+  useEffect(() => {
+    auth.onAuthStateChanged(async (user) => {
+      // @ts-ignore
+      const { displayName, email }  = user;
+      setUser({
+        displayName,
+        email
+      })
+    })
+  },[])*/
 
   return (
     <div className={'main'}>

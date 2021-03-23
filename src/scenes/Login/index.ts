@@ -1,4 +1,4 @@
-import {Login, LoginType} from './Login';
+import {Login, UserType} from './Login';
 
 export {Login};
-export type {LoginType};
+export type {UserType};

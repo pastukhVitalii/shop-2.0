@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import firebase from 'firebase';
 import { Dispatch } from 'redux';
 
 import { api } from '../api/api';
-import { LoginType } from '../scenes/Login';
+import { UserType } from '../scenes/Login';
+import { setUserAC } from './userReducer';
 
 const initialState = {
   isLoggedIn: false,
@@ -22,11 +24,14 @@ export const authReducer = slice.reducer;
 export const { setIsLoggedInAC } = slice.actions;
 
 // thunks
-export const loginTC = (data: LoginType) => (dispatch: Dispatch) => {
+export const loginTC = (user: UserType) => (dispatch: Dispatch) => {
   api
-    .login(data)
+    .login(user)
     .then(() => {
       dispatch(setIsLoggedInAC({ value: true }));
+    })
+    .then(() => {
+      dispatch(setUserAC({ user }));
     })
     .catch((error) => alert(error));
 };
@@ -37,5 +42,49 @@ export const logoutTC = () => (dispatch: Dispatch) => {
     .then(() => {
       dispatch(setIsLoggedInAC({ value: false }));
     })
+    .then(() => {
+      dispatch(
+        setUserAC({
+          user: {
+            firstName: '',
+            lastName: '',
+            email: '',
+            pass: '',
+          },
+        }),
+      );
+    })
     .catch((error) => alert(error));
+};
+
+export const registerTC = (user: UserType) => (dispatch: Dispatch) => {
+  api
+    .register(user)
+    .then(() =>
+      firebase.database().ref(`users/${firebase.auth().currentUser?.uid}`).set(user),
+    )
+    .then(() => dispatch(setIsLoggedInAC({ value: true })))
+    .catch((error: string) => alert(error));
+};
+
+export const registerGoogleTC = () => (dispatch: Dispatch) => {
+  let user: UserType;
+  api
+    .registerGoogle()
+    .then((res) => {
+      user = {
+        firstName: res.user?.displayName?.split(' ')[0],
+        lastName: res.user?.displayName?.split(' ')[1],
+        email: res.user?.email || '',
+        pass: '222222',
+      };
+    })
+    .then(() =>
+      firebase.database().ref(`users/${firebase.auth().currentUser?.uid}`).set(user),
+    )
+    .then(() => alert('Default pass 222222'))
+    .then(() => dispatch(setIsLoggedInAC({ value: true })))
+    .catch((error) => {
+      alert(error.message);
+    });
 };

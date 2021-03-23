@@ -6,16 +6,14 @@ import {
   Paper,
   TextField,
 } from '@material-ui/core';
-import firebase from 'firebase';
 import { useFormik } from 'formik';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { setIsLoggedInAC } from '../../BLL-redux/auth-reducer';
+import { registerGoogleTC, registerTC } from '../../BLL-redux/auth-reducer';
 import { AppRootStateType } from '../../BLL-redux/store';
 import { maxLengthCreator, required } from '../../components/Form/validators';
-
 
 export const Register = React.memo(() => {
   console.log('register page');
@@ -72,21 +70,15 @@ export const Register = React.memo(() => {
     },
 
     onSubmit: (data) => {
-      firebase
-        .auth()
-        .createUserWithEmailAndPassword(data.email, data.pass)
-        .then(() =>
-          firebase
-            .database()
-            .ref(`users/${firebase.auth().currentUser?.uid}`)
-            .set(data),
-        )
-        .then(() => dispatch(setIsLoggedInAC({ value: true })))
-        .catch((error: string) => alert(error));
+      dispatch(registerTC(data));
     },
   });
 
   const dispatch = useDispatch();
+
+  const signInWithGoogle = () => {
+    dispatch(registerGoogleTC());
+  };
 
   if (isLoggedIn) {
     return <Redirect to={'/'} />;
@@ -135,6 +127,14 @@ export const Register = React.memo(() => {
                   style={{ margin: '20px ' }}
                 >
                   Registered
+                </Button>
+                <Button
+                  variant="contained"
+                  color={'primary'}
+                  onClick={signInWithGoogle}
+                  style={{ margin: '20px ', width: 'calc(100% - 40px)' }}
+                >
+                  Continue with Google
                 </Button>
               </FormGroup>
             </FormControl>

@@ -7,21 +7,21 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import firebase from 'firebase';
 import { useFormik } from 'formik';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Redirect } from 'react-router-dom';
 
-import { loginTC, setIsLoggedInAC } from '../../BLL-redux/auth-reducer';
+import { loginTC, registerGoogleTC } from '../../BLL-redux/auth-reducer';
 import { AppRootStateType } from '../../BLL-redux/store';
 import { maxLengthCreator, required } from '../../components/Form/validators';
 
-export type LoginType = {
+export type UserType = {
   email: string;
   firstName?: string;
   lastName?: string;
   pass: string;
+  phoneNumber?: string
 };
 
 export const Login = React.memo(() => {
@@ -63,23 +63,9 @@ export const Login = React.memo(() => {
   );
 
   const dispatch = useDispatch();
-  const auth = firebase.auth();
-  const googleProvider = new firebase.auth.GoogleAuthProvider();
+
   const signInWithGoogle = () => {
-    auth
-      .signInWithPopup(googleProvider)
-      .then((res) =>
-        firebase
-          .database()
-          .ref(`users/${firebase.auth().currentUser?.uid}`)
-          .set({firstName: res.user?.displayName?.split(' ')[0],
-            lastName: res.user?.displayName?.split(' ')[1],
-            email: res.user?.email})
-      )
-      .then(() => dispatch(setIsLoggedInAC({ value: true })))
-      .catch((error) => {
-        alert(error.message);
-      });
+    dispatch(registerGoogleTC());
   };
 
   if (isLoggedIn) {
@@ -113,7 +99,7 @@ export const Login = React.memo(() => {
                   type="submit"
                   style={{ margin: '20px ', width: 'calc(100% - 40px)' }}
                 >
-                  Send
+                  Sign in
                 </Button>
                 <Typography align={'center'}>or</Typography>
                 <Button

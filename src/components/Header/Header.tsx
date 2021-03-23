@@ -3,13 +3,14 @@ import BottomNavigation from '@material-ui/core/BottomNavigation';
 import { makeStyles } from '@material-ui/core/styles';
 import { ShoppingCart } from '@material-ui/icons';
 import HomeIcon from '@material-ui/icons/Home';
-import firebase from 'firebase';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import { logoutTC } from '../../BLL-redux/auth-reducer';
 import { AppRootStateType } from '../../BLL-redux/store';
+import { initializeUserTC } from '../../BLL-redux/userReducer';
+import { UserType } from '../../scenes/Login';
 
 type PropsType = {
   totalPrice: number;
@@ -31,27 +32,19 @@ export const Header = React.memo(function (props: PropsType) {
   const isLoggedIn = useSelector<AppRootStateType, boolean>(
     (state) => state.auth.isLoggedIn,
   );
+
+  const user = useSelector<AppRootStateType, UserType>((state) => state.user);
+
   console.log(' is login ' + isLoggedIn);
-  const [userName, setUserName] = React.useState('');
 
   const dispatch = useDispatch();
   const classes = useStyles();
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user?.uid) {
-        const db = firebase.database();
-        const name = db.ref(`users/${user?.uid}/`);
-        name.on('value', (elem) => {
-          let uName = { value: elem.val() };
-          setUserName(uName.value.firstName);
-          // setUserName(user.displayName || uName.value.firstName);
-        });
-      }
-    });
-  }, [userName, isLoggedIn]);
+    dispatch(initializeUserTC());
+  }, [dispatch, isLoggedIn]);
+
   const logOutCallback = useCallback(() => {
-    setUserName('');
     dispatch(logoutTC());
   }, [dispatch]);
 
@@ -74,7 +67,7 @@ export const Header = React.memo(function (props: PropsType) {
                 >
                   Log out
                 </Button>{' '}
-                <span>Hello {userName}</span>
+                <span>Hello {user.firstName}</span>
               </>
             ) : (
               <NavLink to={'login'}>

@@ -1,14 +1,16 @@
 import { Grid } from '@material-ui/core';
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import {
-    addProductsTC,
-    deleteProductsTC,
-    ProductType
+  addProductsTC,
+  deleteProductsTC,
+  ProductType,
 } from '../../BLL-redux/productsReducer';
 import { AppRootStateType } from '../../BLL-redux/store';
 import { Form } from '../../components/Form';
 import { ShoppingBlank } from '../../components/ShoppingBlank';
+
 import './ShoppingCart.css';
 
 type PropsType = {};
@@ -17,7 +19,7 @@ export const ShoppingCart = React.memo(function (props: PropsType) {
   console.log('render Shopping Cart');
 
   const products = useSelector<AppRootStateType, Array<ProductType>>(
-    (state) => state.products
+    (state) => state.products,
   );
 
   const dispatch = useDispatch();
@@ -39,8 +41,7 @@ export const ShoppingCart = React.memo(function (props: PropsType) {
   );
 
   const productsF = products.filter((p) => {
-    return p.count > 0; 
-
+    return p.count > 0;
   });
 
   const productsM = productsF.map((p) => {
@@ -60,7 +61,7 @@ export const ShoppingCart = React.memo(function (props: PropsType) {
         {productsM}
       </Grid>
       <Grid item xs={12} md={4} lg={3}>
-        {/*<Form products={productsF} />*/}
+        <Form products={productsF} />
       </Grid>
     </Grid>
   );

@@ -4,7 +4,6 @@ import { Dispatch } from 'redux';
 import { api } from '../api/api';
 import { LoginType } from '../scenes/Login';
 
-
 const initialState = {
   isLoggedIn: false,
 };
@@ -26,7 +25,7 @@ export const { setIsLoggedInAC } = slice.actions;
 export const loginTC = (data: LoginType) => (dispatch: Dispatch) => {
   api
     .login(data)
-    .then((res) => {
+    .then(() => {
       dispatch(setIsLoggedInAC({ value: true }));
     })
     .catch((error) => alert(error));
@@ -35,7 +34,7 @@ export const loginTC = (data: LoginType) => (dispatch: Dispatch) => {
 export const logoutTC = () => (dispatch: Dispatch) => {
   api
     .logout()
-    .then((res) => {
+    .then(() => {
       dispatch(setIsLoggedInAC({ value: false }));
     })
     .catch((error) => alert(error));

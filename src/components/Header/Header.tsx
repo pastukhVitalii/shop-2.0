@@ -44,8 +44,8 @@ export const Header = React.memo(function (props: PropsType) {
         const name = db.ref(`users/${user?.uid}/`);
         name.on('value', (elem) => {
           let uName = { value: elem.val() };
-          console.log(user.displayName || uName.value.firstName);
-          setUserName(user.displayName || uName.value.firstName);
+          setUserName(uName.value.firstName);
+          // setUserName(user.displayName || uName.value.firstName);
         });
       }
     });
@@ -54,6 +54,7 @@ export const Header = React.memo(function (props: PropsType) {
     setUserName('');
     dispatch(logoutTC());
   }, [dispatch]);
+
   return (
     <div>
       <BottomNavigation color="primary" className={classes.root}>

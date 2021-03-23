@@ -14,6 +14,17 @@ export const api = {
       });
     });
   },
+  byProduct(productId: string, inCart: boolean) {
+    const db = firebase.database();
+    // path to count
+    const productItem = db.ref(`products/${productId}/inCart`);
+    // write new count and read count
+
+    return productItem.set(!inCart)
+    /*return productItem.transaction(function (inCart) {
+      return !inCart;
+    });*/
+  },
   addProducts(product: ProductType) {
     const db = firebase.database();
     const productId = product.id; // get id product

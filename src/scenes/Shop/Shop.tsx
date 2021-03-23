@@ -2,30 +2,31 @@ import { Collapse, Grid, Paper } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addProductsTC, ProductType } from '../../BLL-redux/productsReducer';
+
+import { byProductTC, ProductType } from '../../BLL-redux/productsReducer';
 import { AppRootStateType } from '../../BLL-redux/store';
-import { CardBlank } from '../../components/CardBlank/CardBlank';
+import { CardBlank } from '../../components/CardBlank';
 
 import './Shop.css';
 
+
 type PropsType = {
-    products?: Array<ProductType> // type for storybook
-    addProducts?: (value: any) => void // type for storybook
+  products?: Array<ProductType>; // type for storybook
+  addProducts?: (value: any) => void; // type for storybook
 };
 
 export const Shop = React.memo(function (props: PropsType) {
   console.log('render Shop');
 
   const products = useSelector<AppRootStateType, Array<ProductType>>(
-    (state) => state.products
+    (state) => state.products,
   );
 
   const dispatch = useDispatch();
 
-  const addProduct = useCallback(
-    function (products: ProductType) {
-      const thunk = addProductsTC(products);
-      dispatch(thunk);
+  const byProduct = useCallback(
+    function (id: string, inCart: boolean) {
+      dispatch(byProductTC(id, inCart));
     },
     [dispatch],
   );
@@ -49,11 +50,7 @@ export const Shop = React.memo(function (props: PropsType) {
                 height: '400px',
               }}
             >
-              <CardBlank
-                products={p}
-                addProducts={addProduct}
-                setAlert={setAlert}
-              />
+              <CardBlank products={p} addProducts={byProduct} setAlert={setAlert} />
             </Paper>
           );
         })}

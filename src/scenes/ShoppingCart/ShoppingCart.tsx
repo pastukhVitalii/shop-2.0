@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  addProductsTC,
+  addProductsTC, byProductTC,
   deleteProductsTC,
   ProductType,
 } from '../../BLL-redux/productsReducer';
@@ -24,7 +24,7 @@ export const ShoppingCart = React.memo(function (props: PropsType) {
 
   const dispatch = useDispatch();
 
-  const addProduct = useCallback(
+  const increaseProduct = useCallback(
     function (products: ProductType) {
       const thunk = addProductsTC(products);
       dispatch(thunk);
@@ -32,7 +32,7 @@ export const ShoppingCart = React.memo(function (props: PropsType) {
     [dispatch],
   );
 
-  const deleteProducts = useCallback(
+  const decreaseProducts = useCallback(
     function (products: ProductType) {
       const thunk = deleteProductsTC(products);
       dispatch(thunk);
@@ -40,8 +40,14 @@ export const ShoppingCart = React.memo(function (props: PropsType) {
     [dispatch],
   );
 
+  const deleteProducts = useCallback(
+    function (id: string, inCart: boolean) {
+      dispatch(byProductTC(id, inCart));
+    },
+    [dispatch],
+  );
   const productsF = products.filter((p) => {
-    return p.count > 0;
+    return p.inCart;
   });
 
   const productsM = productsF.map((p) => {
@@ -49,7 +55,8 @@ export const ShoppingCart = React.memo(function (props: PropsType) {
       <ShoppingBlank
         key={p.id}
         products={p}
-        addProducts={addProduct}
+        increaseProducts={increaseProduct}
+        decreaseProducts={decreaseProducts}
         deleteProducts={deleteProducts}
       />
     );

@@ -1,52 +1,52 @@
-import React from 'react';
 import {
-    Button,
-    Card,
-    CardActions,
-    CardContent,
-    CardHeader,
-    CardMedia,
-    createStyles,
-    Grid,
-    Theme,
-    Typography
-} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  CardMedia,
+  createStyles,
+  Grid,
+  Typography,
+} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import {ProductType} from '../../BLL-redux/productsReducer';
+import React from 'react';
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            maxWidth: 345,
-        },
-        media: {
-            width: '60%',
-            margin: '0 auto',
-            height: '170px',
-        },
-    }),
+import { ProductType } from '../../BLL-redux/productsReducer';
+
+const useStyles = makeStyles(() =>
+  createStyles({
+    root: {
+      maxWidth: 345,
+    },
+    media: {
+      width: '60%',
+      margin: '0 auto',
+      height: '170px',
+    },
+  }),
 );
 
 export type PropsType = {
     products: ProductType,
-    addProducts: (products: ProductType) => void
+    addProducts: (id: string, inCart: boolean) => void
     setAlert: (alert: boolean) => void
 }
 export type CardType = {
-    onAddItem?: () => void,
+    onAddItem?: (id: string, inCart: boolean) => void,
     onDeleteItem?: () => void,
 }
 
 export const CardBlank = React.memo(function (props: PropsType & CardType) {
         console.log('render Card')
-        const inCart = props.products.count > 0;
+        const inCart = props.products.inCart;
         const color = inCart ? 'secondary' : 'primary';
         const disable = inCart;
         const classes = useStyles();
 
         let onAddItem = () => {
-            props.addProducts(props.products);
+            props.addProducts(props.products.id, props.products.inCart);
             props.setAlert(true);
             setTimeout(() => {
                 props.setAlert(false);

@@ -28,9 +28,9 @@ export const ref = db.ref();
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
-      <React.StrictMode>
+      {/*<React.StrictMode>*/}
         <AppShop />
-      </React.StrictMode>
+      {/*</React.StrictMode>*/}
     </BrowserRouter>
   </Provider>,
   document.getElementById("root")

@@ -45,7 +45,7 @@ export const CardBlank = React.memo(function (props: PropsType & CardType) {
         const disable = inCart;
         const classes = useStyles();
 
-        let onAddItem = () => {
+        const onAddItem = () => {
             props.addProducts(props.products.id, props.products.inCart);
             props.setAlert(true);
             setTimeout(() => {

@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  addProductsTC, byProductTC,
+  addProductsTC, changeProductStatusTC,
   deleteProductsTC,
   ProductType,
 } from '../../BLL-redux/productsReducer';
@@ -13,9 +13,7 @@ import { ShoppingBlank } from '../../components/ShoppingBlank';
 
 import './ShoppingCart.css';
 
-type PropsType = {};
-
-export const ShoppingCart = React.memo(function (props: PropsType) {
+export const ShoppingCart = React.memo(function () {
   console.log('render Shopping Cart');
 
   const products = useSelector<AppRootStateType, Array<ProductType>>(
@@ -42,7 +40,7 @@ export const ShoppingCart = React.memo(function (props: PropsType) {
 
   const deleteProducts = useCallback(
     function (id: string, inCart: boolean) {
-      dispatch(byProductTC(id, inCart));
+      dispatch(changeProductStatusTC(id, inCart));
     },
     [dispatch],
   );

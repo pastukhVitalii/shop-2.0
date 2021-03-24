@@ -3,12 +3,11 @@ import { Alert } from '@material-ui/lab';
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { byProductTC, ProductType } from '../../BLL-redux/productsReducer';
+import { changeProductStatusTC, ProductType } from '../../BLL-redux/productsReducer';
 import { AppRootStateType } from '../../BLL-redux/store';
 import { CardBlank } from '../../components/CardBlank';
 
 import './Shop.css';
-
 
 type PropsType = {
   products?: Array<ProductType>; // type for storybook
@@ -26,12 +25,12 @@ export const Shop = React.memo(function (props: PropsType) {
 
   const byProduct = useCallback(
     function (id: string, inCart: boolean) {
-      dispatch(byProductTC(id, inCart));
+      dispatch(changeProductStatusTC(id, inCart));
     },
     [dispatch],
   );
 
-  let [alert, setAlert] = useState(false);
+  const [alert, setAlert] = useState(false);
 
   return (
     <>

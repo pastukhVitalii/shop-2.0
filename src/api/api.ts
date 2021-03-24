@@ -1,24 +1,23 @@
 import firebase from 'firebase';
 
 import { ProductType } from '../BLL-redux/productsReducer';
-import { ref } from '../index';
 import { UserType } from '../scenes/Login';
+
 
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 export const api = {
-  getProducts() {
+  /*getProducts() {
     return new Promise((res) => {
       ref.on('value', (snapshot) => {
         res(snapshot.val());
       });
     });
-  },
-  byProduct(productId: string, inCart: boolean) {
+  },*/
+  changeProductStatus(productId: string, inCart: boolean) {
     const db = firebase.database();
     // path to count
     const productItem = db.ref(`products/${productId}/inCart`);
-    // write new count and read count
 
     return productItem.set(!inCart)
     /*return productItem.transaction(function (inCart) {

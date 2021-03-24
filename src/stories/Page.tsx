@@ -1,10 +1,11 @@
 import React from 'react';
 
 import { Header } from './Header';
+
 import './page.css';
 
 export interface PageProps {
-  user?: {};
+  user?: any;
   onLogin: () => void;
   onLogout: () => void;
   onCreateAccount: () => void;

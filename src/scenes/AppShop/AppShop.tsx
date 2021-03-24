@@ -23,17 +23,17 @@ export const AppShop = React.memo(function () {
     }, 500);
   }, [dispatch]);
 
-  let arrPrice = useMemo(() => {
+  const arrPrice = useMemo(() => {
     return products.map((p) => p.price * p.count);
   }, [products]);
 
-  let totalPrice = useMemo(() => {
+  const totalPrice = useMemo(() => {
     return arrPrice.reduce((sum, pr) => {
       return sum + pr;
     }, 0);
   }, [arrPrice]);
 
-  let [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   console.log(`loading ${loading}`);
   return (

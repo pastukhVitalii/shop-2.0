@@ -50,10 +50,10 @@ export const Header = React.memo(function (props: PropsType) {
 
   return (
     <div>
-      <BottomNavigation color="primary" className={classes.root}>
+      <BottomNavigation color="primary" className={classes.root} showLabels={false}>
         <Grid container direction="row" justify="space-between">
           <div>
-            <NavLink to={'/'}>
+            <NavLink to={'/'} >
               <IconButton className={classes.btn_header}>
                 <HomeIcon />
               </IconButton>

@@ -82,7 +82,6 @@ export const registerGoogleTC = () => (dispatch: Dispatch) => {
     .then(() =>
       firebase.database().ref(`users/${firebase.auth().currentUser?.uid}`).set(user),
     )
-    .then(() => alert('Default pass 222222'))
     .then(() => dispatch(setIsLoggedInAC({ value: true })))
     .catch((error) => {
       alert(error.message);

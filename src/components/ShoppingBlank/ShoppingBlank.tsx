@@ -52,7 +52,7 @@ export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
     props.decreaseProducts(props.products);
   };
 
-  let onDeleteItem = () => {
+  const onDeleteItem = () => {
     props.deleteProducts(props.products.id, props.products.inCart);
     /*props.setAlert(true);
     setTimeout(() => {

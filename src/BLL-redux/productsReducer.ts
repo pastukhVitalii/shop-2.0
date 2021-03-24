@@ -19,8 +19,7 @@ export const slice = createSlice({
   name: 'products',
   initialState: initialState,
   reducers: {
-    byProductAC(state, action: PayloadAction<{ id: string; inCart: boolean }>) {
-      debugger
+    changeProductStatusAC(state, action: PayloadAction<{ id: string; inCart: boolean }>) {
       const index = state.findIndex((tl) => tl.id === action.payload.id);
       state[index].inCart = !action.payload.inCart;
     },
@@ -37,7 +36,7 @@ export const slice = createSlice({
 });
 
 export const {
-  byProductAC,
+  changeProductStatusAC,
   addProductAC,
   deleteProductAC,
   getProductsAC,
@@ -62,11 +61,11 @@ export const getProductsTC = () => {
     .catch((error) => alert(error));
 };*/
 
-export const byProductTC = (id: string, inCart: boolean) => (dispatch: Dispatch) => {
-   api
-    .byProduct(id, inCart)
+export const changeProductStatusTC = (id: string, inCart: boolean) => (dispatch: Dispatch) => {
+  api
+    .changeProductStatus(id, inCart)
     .then(() => {
-      dispatch(byProductAC({ id, inCart }));
+      dispatch(changeProductStatusAC({ id, inCart }));
     })
     .catch((error) => alert(error));
 };

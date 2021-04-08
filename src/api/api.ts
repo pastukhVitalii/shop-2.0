@@ -2,7 +2,7 @@ import firebase from 'firebase';
 
 import { ProductType } from '../BLL-redux/productsReducer';
 import { UserType } from '../scenes/Login';
-
+import {db} from "../firebaseConfig";
 
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
@@ -15,7 +15,6 @@ export const api = {
     });
   },*/
   changeProductStatus(productId: string, inCart: boolean) {
-    const db = firebase.database();
     // path to count
     const productItem = db.ref(`products/${productId}/inCart`);
 
@@ -25,7 +24,6 @@ export const api = {
     });*/
   },
   addProducts(product: ProductType) {
-    const db = firebase.database();
     const productId = product.id; // get id product
     // path to count
     const productItem = db.ref(`products/${productId}/count`);
@@ -35,7 +33,6 @@ export const api = {
     });
   },
   deleteProducts(product: ProductType) {
-    const db = firebase.database();
     const productId = product.id; // get id product
     // path to count
     const productItem = db.ref(`products/${productId}/count`);

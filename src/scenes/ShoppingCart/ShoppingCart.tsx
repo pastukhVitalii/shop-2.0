@@ -1,17 +1,17 @@
-import { Grid } from '@material-ui/core';
-import React, { useCallback } from 'react';
+import { Collapse, Grid } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
+import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  addProductsTC, changeProductStatusTC,
+  addProductsTC,
+  changeProductStatusTC,
   deleteProductsTC,
   ProductType,
 } from '../../BLL-redux/productsReducer';
 import { AppRootStateType } from '../../BLL-redux/store';
 import { Form } from '../../components/Form';
 import { ShoppingBlank } from '../../components/ShoppingBlank';
-
-import './ShoppingCart.css';
 
 export const ShoppingCart = React.memo(function () {
   console.log('render Shopping Cart');
@@ -48,6 +48,8 @@ export const ShoppingCart = React.memo(function () {
     return p.inCart;
   });
 
+  const [alert, setAlert] = useState(false);
+
   const productsM = productsF.map((p) => {
     return (
       <ShoppingBlank
@@ -56,18 +58,24 @@ export const ShoppingCart = React.memo(function () {
         increaseProducts={increaseProduct}
         decreaseProducts={decreaseProducts}
         deleteProducts={deleteProducts}
+        setAlert={setAlert}
       />
     );
   });
 
   return (
-    <Grid container spacing={4} justify={'center'}>
-      <Grid item xs={12} md={8} lg={7}>
-        {productsM}
+    <>
+      <Collapse in={alert}>
+        <Alert onClose={() => setAlert(false)}>Delete!</Alert>
+      </Collapse>
+      <Grid container spacing={4} justify={'center'}>
+        <Grid item xs={12} md={8} lg={7}>
+          {productsM}
+        </Grid>
+        <Grid item xs={12} md={4} lg={3}>
+          <Form products={productsF} />
+        </Grid>
       </Grid>
-      <Grid item xs={12} md={4} lg={3}>
-        <Form products={productsF} />
-      </Grid>
-    </Grid>
+    </>
   );
 });

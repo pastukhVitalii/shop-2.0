@@ -14,7 +14,8 @@ import { NavLink, Redirect } from 'react-router-dom';
 
 import { loginTC, registerGoogleTC } from '../../BLL-redux/auth-reducer';
 import { AppRootStateType } from '../../BLL-redux/store';
-import { maxLengthCreator, required } from '../../components/Form/validators';
+import { maxLengthCreator, required } from '../../utils/validators';
+import {useStyles} from './index';
 
 export type UserType = {
   email: string;
@@ -26,6 +27,7 @@ export type UserType = {
 
 export const Login = React.memo(() => {
   console.log('login page');
+  const classes = useStyles();
 
   const formik = useFormik({
     validate: (values) => {
@@ -77,27 +79,27 @@ export const Login = React.memo(() => {
       <Grid item xs={12} md={8} lg={7}>
         <Paper>
           <form onSubmit={formik.handleSubmit}>
-            <FormControl style={{ width: ' 100%' }}>
+            <FormControl className={classes.root}>
               <FormGroup>
                 <TextField
                   label="Email"
                   variant={'filled'}
                   {...formik.getFieldProps('email')}
-                  style={{ margin: '20px ' }}
+                  className={classes.form_item}
                 />
-                {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+                {formik.errors.email ? <div className={classes.error}>{formik.errors.email}</div> : null}
                 <TextField
                   label="Password"
                   variant={'filled'}
                   {...formik.getFieldProps('pass')}
-                  style={{ margin: '20px ' }}
+                  className={classes.form_item}
                 />
-                {formik.errors.pass ? <div>{formik.errors.pass}</div> : null}
+                {formik.errors.pass ? <div className={classes.error}>{formik.errors.pass}</div> : null}
                 <Button
                   variant="contained"
                   color="primary"
                   type="submit"
-                  style={{ margin: '20px ', width: 'calc(100% - 40px)' }}
+                  className={classes.form_item}
                 >
                   Sign in
                 </Button>
@@ -105,7 +107,7 @@ export const Login = React.memo(() => {
                 <Button
                   variant="contained"
                   color={'primary'}
-                  style={{ margin: '20px ', width: 'calc(100% - 40px)' }}
+                  className={classes.form_item}
                 >
                   <NavLink style={{ color: 'white' }} to={'/register'}>
                     {' '}
@@ -117,7 +119,7 @@ export const Login = React.memo(() => {
                 variant="contained"
                 color={'primary'}
                 onClick={signInWithGoogle}
-                style={{ margin: '20px ', width: 'calc(100% - 40px)' }}
+                className={classes.form_item}
               >
                 Continue with Google
               </Button>

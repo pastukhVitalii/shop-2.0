@@ -10,7 +10,8 @@ import { useFormik } from 'formik';
 import React from 'react';
 
 import { ProductType } from '../../BLL-redux/productsReducer';
-import { maxLengthCreator, required } from './validators';
+import { maxLengthCreator, required } from '../../utils/validators';
+import { useStyles } from './index';
 
 type PropsType = {
   products: Array<ProductType>;
@@ -18,6 +19,7 @@ type PropsType = {
 
 export const Form = function (props: PropsType) {
   console.log('render Form');
+  const classes = useStyles();
 
   const saveProducts = (products: string) => {
     const stateAsString = JSON.stringify(products);
@@ -52,7 +54,6 @@ export const Form = function (props: PropsType) {
           email: 'Invalid email',
         };
       }
-
       if (!values.phoneNumber) {
         return {
           phoneNumber: required(values.phoneNumber),
@@ -83,7 +84,7 @@ export const Form = function (props: PropsType) {
   });
 
   return (
-    <Paper>
+    <Paper className={classes.root}>
       <form onSubmit={formik.handleSubmit}>
         <FormControl>
           <FormLabel>
@@ -94,28 +95,30 @@ export const Form = function (props: PropsType) {
               label="First Name"
               variant={'filled'}
               {...formik.getFieldProps('firstName')}
-              style={{ margin: '20px ', width: 'calc(100% - 40px)' }}
+              className={classes.form_item}
             />
-            {formik.errors.firstName ? <div>{formik.errors.firstName}</div> : null}
+            {formik.errors.firstName ? (
+              <div className={classes.error}>{formik.errors.firstName}</div>
+            ) : null}
             <TextField
               label="Last Name"
               variant={'filled'}
               {...formik.getFieldProps('lastName')}
-              style={{ margin: '20px ', width: 'calc(100% - 40px)' }}
+              className={classes.form_item}
             />
             {formik.errors.lastName ? <div>{formik.errors.lastName}</div> : null}
             <TextField
               label="Email"
               variant={'filled'}
               {...formik.getFieldProps('email')}
-              style={{ margin: '20px ', width: 'calc(100% - 40px)' }}
+              className={classes.form_item}
             />
             {formik.errors.email ? <div>{formik.errors.email}</div> : null}
             <TextField
               label="Phone number"
               variant={'filled'}
               {...formik.getFieldProps('phoneNumber')}
-              style={{ margin: '20px ', width: 'calc(100% - 40px)' }}
+              className={classes.form_item}
             />
             {formik.errors.phoneNumber ? (
               <div>{formik.errors.phoneNumber}</div>
@@ -124,7 +127,7 @@ export const Form = function (props: PropsType) {
               variant="contained"
               color="primary"
               type="submit"
-              style={{ margin: '20px ', width: 'calc(100% - 40px)' }}
+              className={classes.form_item}
             >
               Send
             </Button>

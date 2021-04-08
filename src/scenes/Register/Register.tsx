@@ -13,10 +13,12 @@ import { Redirect } from 'react-router-dom';
 
 import { registerGoogleTC, registerTC } from '../../BLL-redux/auth-reducer';
 import { AppRootStateType } from '../../BLL-redux/store';
-import { maxLengthCreator, required } from '../../components/Form/validators';
+import { maxLengthCreator, required } from '../../utils/validators';
+import { useStyles } from '../Login/index';
 
 export const Register = React.memo(() => {
   console.log('register page');
+  const classes = useStyles();
 
   const isLoggedIn = useSelector<AppRootStateType, boolean>(
     (state) => state.auth.isLoggedIn,
@@ -88,43 +90,49 @@ export const Register = React.memo(() => {
       <Grid item xs={12} md={8} lg={7}>
         <Paper>
           <form onSubmit={formik.handleSubmit}>
-            <FormControl style={{ width: ' 100%' }}>
+            <FormControl className={classes.root}>
               <FormGroup>
                 <TextField
                   label="First Name"
                   variant={'filled'}
                   {...formik.getFieldProps('firstName')}
-                  style={{ margin: '20px ' }}
+                  className={classes.form_item}
                 />
                 {formik.errors.firstName ? (
-                  <div>{formik.errors.firstName}</div>
+                  <div className={classes.error}>{formik.errors.firstName}</div>
                 ) : null}
                 <TextField
                   label="Last Name"
                   variant={'filled'}
                   {...formik.getFieldProps('lastName')}
-                  style={{ margin: '20px ' }}
+                  className={classes.form_item}
                 />
-                {formik.errors.lastName ? <div>{formik.errors.lastName}</div> : null}
+                {formik.errors.lastName ? (
+                  <div className={classes.error}>{formik.errors.lastName}</div>
+                ) : null}
                 <TextField
                   label="Email"
                   variant={'filled'}
                   {...formik.getFieldProps('email')}
-                  style={{ margin: '20px ' }}
+                  className={classes.form_item}
                 />
-                {formik.errors.email ? <div>{formik.errors.email}</div> : null}
+                {formik.errors.email ? (
+                  <div className={classes.error}>{formik.errors.email}</div>
+                ) : null}
                 <TextField
                   label="Password"
                   variant={'filled'}
                   {...formik.getFieldProps('pass')}
-                  style={{ margin: '20px ' }}
+                  className={classes.form_item}
                 />
-                {formik.errors.pass ? <div>{formik.errors.pass}</div> : null}
+                {formik.errors.pass ? (
+                  <div className={classes.error}>{formik.errors.pass}</div>
+                ) : null}
                 <Button
                   variant="contained"
                   color="primary"
                   type="submit"
-                  style={{ margin: '20px ' }}
+                  className={classes.form_item}
                 >
                   Registered
                 </Button>
@@ -132,7 +140,7 @@ export const Register = React.memo(() => {
                   variant="contained"
                   color={'primary'}
                   onClick={signInWithGoogle}
-                  style={{ margin: '20px ', width: 'calc(100% - 40px)' }}
+                  className={classes.form_item}
                 >
                   Continue with Google
                 </Button>

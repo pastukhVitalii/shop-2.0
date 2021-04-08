@@ -1,3 +1,4 @@
 import {CardBlank} from './CardBlank';
+import {useStyles} from './CardBlankStyle';
 
-export {CardBlank};
+export {CardBlank, useStyles};

@@ -1,3 +1,4 @@
 import {Shop} from './Shop';
+import {useStyles} from './ShopStyle';
 
-export {Shop};
+export {Shop,useStyles };

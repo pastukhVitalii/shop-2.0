@@ -4,35 +4,22 @@ import {
   CardContent,
   CardHeader,
   CardMedia,
-  createStyles,
   Grid,
   IconButton,
   Typography,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import { Add, DeleteForever, Remove } from '@material-ui/icons';
 import React from 'react';
 
 import { ProductType } from '../../BLL-redux/productsReducer';
-
-const useStyles = makeStyles(() =>
-  createStyles({
-    root: {
-      maxWidth: '100%',
-      marginTop: '30px',
-    },
-    media: {
-      height: '100%',
-      margin: '0 auto',
-    },
-  }),
-);
+import { useStyles } from './index';
 
 export type PropsType = {
   products: ProductType;
   increaseProducts: (products: ProductType) => void;
   decreaseProducts: (products: ProductType) => void;
-  deleteProducts: (id: string, inCart: boolean) => void
+  deleteProducts: (id: string, inCart: boolean) => void;
+  setAlert: (alert: boolean) => void;
 };
 
 export type CardType = {
@@ -54,11 +41,11 @@ export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
 
   const onDeleteItem = () => {
     props.deleteProducts(props.products.id, props.products.inCart);
-    /*props.setAlert(true);
+    props.setAlert(true);
     setTimeout(() => {
       props.setAlert(false);
-    }, 1500);*/
-  }
+    }, 1500);
+  };
 
   return (
     <Card className={classes.root}>
@@ -87,9 +74,7 @@ export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
           <Grid container justify={'center'}>
             <CardActions>
               {props.products.count > 1 ? (
-                <IconButton
-                  onClick={onDecreaseItem}
-                >
+                <IconButton onClick={onDecreaseItem}>
                   <Remove />
                 </IconButton>
               ) : (
@@ -98,8 +83,11 @@ export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
                 </IconButton>
               )}
               <div>{props.products.count}</div>
-              <IconButton onClick={onIncreaseItem} disabled={props.products.count >= 10}>
-                <Add />{' '}
+              <IconButton
+                onClick={onIncreaseItem}
+                disabled={props.products.count >= 10}
+              >
+                <Add />
                 {props.products.count === 10 ? (
                   <div style={{ color: 'tomato', fontSize: '14px' }}>
                     Max count !!

@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
 
 import { api } from '../api/api';
-import { ref } from '../index';
+import {ref} from "../firebaseConfig";
 
 export type ProductType = {
   id: string;

@@ -6,8 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeProductStatusTC, ProductType } from '../../BLL-redux/productsReducer';
 import { AppRootStateType } from '../../BLL-redux/store';
 import { CardBlank } from '../../components/CardBlank';
-
-import './Shop.css';
+import { useStyles } from './index';
 
 type PropsType = {
   products?: Array<ProductType>; // type for storybook
@@ -16,6 +15,7 @@ type PropsType = {
 
 export const Shop = React.memo(function (props: PropsType) {
   console.log('render Shop');
+  const classes = useStyles();
 
   const products = useSelector<AppRootStateType, Array<ProductType>>(
     (state) => state.products,
@@ -23,7 +23,7 @@ export const Shop = React.memo(function (props: PropsType) {
 
   const dispatch = useDispatch();
 
-  const byProduct = useCallback(
+  const changeProductStatus = useCallback(
     function (id: string, inCart: boolean) {
       dispatch(changeProductStatusTC(id, inCart));
     },
@@ -40,16 +40,12 @@ export const Shop = React.memo(function (props: PropsType) {
       <Grid container spacing={1} justify="center">
         {products.map((p) => {
           return (
-            <Paper
-              key={p.id}
-              style={{
-                backgroundColor: 'blue',
-                margin: '30px',
-                width: '300px',
-                height: '400px',
-              }}
-            >
-              <CardBlank products={p} addProducts={byProduct} setAlert={setAlert} />
+            <Paper key={p.id} className={classes.card}>
+              <CardBlank
+                products={p}
+                addProducts={changeProductStatus}
+                setAlert={setAlert}
+              />
             </Paper>
           );
         })}

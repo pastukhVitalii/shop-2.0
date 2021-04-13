@@ -1,5 +1,6 @@
 import {Login, UserType} from './Login';
 import {useStyles} from './LoginRegisterStyle';
 
-export {Login, useStyles};
+export { useStyles};
+export default Login as React.FC;
 export type {UserType};

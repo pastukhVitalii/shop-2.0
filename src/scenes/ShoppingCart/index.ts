@@ -1,3 +1,3 @@
 import {ShoppingCart} from './ShoppingCart';
 
-export {ShoppingCart};
+export default ShoppingCart as React.FC;

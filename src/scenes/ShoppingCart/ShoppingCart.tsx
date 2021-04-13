@@ -14,7 +14,6 @@ import { Form } from '../../components/Form';
 import { ShoppingBlank } from '../../components/ShoppingBlank';
 
 export const ShoppingCart = React.memo(function () {
-  console.log('render Shopping Cart');
 
   const products = useSelector<AppRootStateType, Array<ProductType>>(
     (state) => state.products,
@@ -23,16 +22,16 @@ export const ShoppingCart = React.memo(function () {
   const dispatch = useDispatch();
 
   const increaseProduct = useCallback(
-    function (products: ProductType) {
-      const thunk = addProductsTC(products);
+    function (id: string) {
+      const thunk = addProductsTC(id);
       dispatch(thunk);
     },
     [dispatch],
   );
 
   const decreaseProducts = useCallback(
-    function (products: ProductType) {
-      const thunk = deleteProductsTC(products);
+    function (id: string) {
+      const thunk = deleteProductsTC(id);
       dispatch(thunk);
     },
     [dispatch],
@@ -70,6 +69,7 @@ export const ShoppingCart = React.memo(function () {
       </Collapse>
       <Grid container spacing={4} justify={'center'}>
         <Grid item xs={12} md={8} lg={7}>
+          {}
           {productsM}
         </Grid>
         <Grid item xs={12} md={4} lg={3}>

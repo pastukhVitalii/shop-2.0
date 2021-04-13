@@ -17,7 +17,6 @@ import { maxLengthCreator, required } from '../../utils/validators';
 import { useStyles } from '../Login/index';
 
 export const Register = React.memo(() => {
-  console.log('register page');
   const classes = useStyles();
 
   const isLoggedIn = useSelector<AppRootStateType, boolean>(
@@ -98,7 +97,7 @@ export const Register = React.memo(() => {
                   {...formik.getFieldProps('firstName')}
                   className={classes.form_item}
                 />
-                {formik.errors.firstName ? (
+                {formik.touched.firstName && formik.errors.firstName ? (
                   <div className={classes.error}>{formik.errors.firstName}</div>
                 ) : null}
                 <TextField
@@ -107,7 +106,7 @@ export const Register = React.memo(() => {
                   {...formik.getFieldProps('lastName')}
                   className={classes.form_item}
                 />
-                {formik.errors.lastName ? (
+                {formik.touched.lastName && formik.errors.lastName ? (
                   <div className={classes.error}>{formik.errors.lastName}</div>
                 ) : null}
                 <TextField
@@ -116,7 +115,7 @@ export const Register = React.memo(() => {
                   {...formik.getFieldProps('email')}
                   className={classes.form_item}
                 />
-                {formik.errors.email ? (
+                {formik.touched.email && formik.errors.email ? (
                   <div className={classes.error}>{formik.errors.email}</div>
                 ) : null}
                 <TextField
@@ -125,7 +124,7 @@ export const Register = React.memo(() => {
                   {...formik.getFieldProps('pass')}
                   className={classes.form_item}
                 />
-                {formik.errors.pass ? (
+                {formik.touched.pass && formik.errors.pass ? (
                   <div className={classes.error}>{formik.errors.pass}</div>
                 ) : null}
                 <Button
@@ -134,7 +133,7 @@ export const Register = React.memo(() => {
                   type="submit"
                   className={classes.form_item}
                 >
-                  Registered
+                  Create Account
                 </Button>
                 <Button
                   variant="contained"

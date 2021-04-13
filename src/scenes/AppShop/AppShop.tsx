@@ -8,7 +8,6 @@ import { Header } from '../../components/Header';
 import { Routes } from './components/Routes';
 
 export const AppShop = React.memo(function () {
-  console.log('render App Shop');
 
   const products = useSelector<AppRootStateType, Array<ProductType>>(
     (state) => state.products,
@@ -35,7 +34,6 @@ export const AppShop = React.memo(function () {
 
   const [loading, setLoading] = useState(true);
 
-  console.log(`loading ${loading}`);
   return (
     <div>
       <Header totalPrice={totalPrice} />

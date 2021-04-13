@@ -1,47 +1,18 @@
 import firebase from 'firebase';
 
-import { ProductType } from '../BLL-redux/productsReducer';
+import { ref } from '../firebaseConfig';
 import { UserType } from '../scenes/Login';
-import {db} from "../firebaseConfig";
 
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
 export const api = {
-  /*getProducts() {
+  getProducts() {
     return new Promise((res) => {
       ref.on('value', (snapshot) => {
         res(snapshot.val());
       });
     });
-  },*/
-  changeProductStatus(productId: string, inCart: boolean) {
-    // path to count
-    const productItem = db.ref(`products/${productId}/inCart`);
-
-    return productItem.set(!inCart)
-    /*return productItem.transaction(function (inCart) {
-      return !inCart;
-    });*/
   },
-  addProducts(product: ProductType) {
-    const productId = product.id; // get id product
-    // path to count
-    const productItem = db.ref(`products/${productId}/count`);
-    // write new count and read count
-    return productItem.transaction(function (currentCount) {
-      return currentCount + 1;
-    });
-  },
-  deleteProducts(product: ProductType) {
-    const productId = product.id; // get id product
-    // path to count
-    const productItem = db.ref(`products/${productId}/count`);
-    // write new count and read count
-    return productItem.transaction(function (currentCount) {
-      return currentCount - 1;
-    });
-  },
-
   login(data: UserType) {
     return firebase.auth().signInWithEmailAndPassword(data.email, data.pass);
   },
@@ -60,7 +31,6 @@ export const api = {
         if (user?.uid) {
           const db = firebase.database();
           const name = db.ref(`users/${user?.uid}/`);
-
           name.on('value', (snapshot) => {
             res({ value: snapshot.val() });
           });

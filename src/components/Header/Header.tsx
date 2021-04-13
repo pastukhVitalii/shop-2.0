@@ -17,7 +17,6 @@ type PropsType = {
 };
 
 export const Header = React.memo(function (props: PropsType) {
-  console.log('Header');
   const classes = useStyles();
   const isLoggedIn = useSelector<AppRootStateType, boolean>(
     (state) => state.auth.isLoggedIn,
@@ -69,7 +68,7 @@ export const Header = React.memo(function (props: PropsType) {
             )}
           </div>
           <div>
-            {isLoggedIn ? <span>{props.totalPrice} $</span> : ''}
+            {props.totalPrice? <span>{props.totalPrice} $</span> : ''}
             <NavLink to={'/shoppingCart'}>
               <IconButton className={classes.btn_header}>
                 <ShoppingCart />

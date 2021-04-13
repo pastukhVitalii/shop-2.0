@@ -15,18 +15,17 @@ import { NavLink, Redirect } from 'react-router-dom';
 import { loginTC, registerGoogleTC } from '../../BLL-redux/auth-reducer';
 import { AppRootStateType } from '../../BLL-redux/store';
 import { maxLengthCreator, required } from '../../utils/validators';
-import {useStyles} from './index';
+import { useStyles } from './index';
 
 export type UserType = {
   email: string;
   firstName?: string;
   lastName?: string;
   pass: string;
-  phoneNumber?: string
+  phoneNumber?: string;
 };
 
 export const Login = React.memo(() => {
-  console.log('login page');
   const classes = useStyles();
 
   const formik = useFormik({
@@ -87,14 +86,18 @@ export const Login = React.memo(() => {
                   {...formik.getFieldProps('email')}
                   className={classes.form_item}
                 />
-                {formik.errors.email ? <div className={classes.error}>{formik.errors.email}</div> : null}
+                {formik.touched.email && formik.errors.email ? (
+                  <div className={classes.error}>{formik.errors.email}</div>
+                ) : null}
                 <TextField
                   label="Password"
                   variant={'filled'}
                   {...formik.getFieldProps('pass')}
                   className={classes.form_item}
                 />
-                {formik.errors.pass ? <div className={classes.error}>{formik.errors.pass}</div> : null}
+                {formik.touched.pass && formik.errors.pass ? (
+                  <div className={classes.error}>{formik.errors.pass}</div>
+                ) : null}
                 <Button
                   variant="contained"
                   color="primary"

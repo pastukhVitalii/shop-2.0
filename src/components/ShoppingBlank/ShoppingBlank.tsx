@@ -16,8 +16,8 @@ import { useStyles } from './index';
 
 export type PropsType = {
   products: ProductType;
-  increaseProducts: (products: ProductType) => void;
-  decreaseProducts: (products: ProductType) => void;
+  increaseProducts: (id: string) => void;
+  decreaseProducts: (id: string) => void;
   deleteProducts: (id: string, inCart: boolean) => void;
   setAlert: (alert: boolean) => void;
 };
@@ -28,15 +28,15 @@ export type CardType = {
 };
 
 export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
-  console.log('render Shopping blank');
+
   const classes = useStyles();
 
   const onIncreaseItem = () => {
-    props.increaseProducts(props.products);
+    props.increaseProducts(props.products.id);
   };
 
   const onDecreaseItem = () => {
-    props.decreaseProducts(props.products);
+    props.decreaseProducts(props.products.id);
   };
 
   const onDeleteItem = () => {

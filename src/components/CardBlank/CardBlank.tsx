@@ -25,7 +25,6 @@ export type CardType = {
 };
 
 export const CardBlank = React.memo(function (props: PropsType & CardType) {
-  console.log('render Card');
   const inCart = props.products.inCart;
   const color = inCart ? 'secondary' : 'primary';
   const disable = inCart;

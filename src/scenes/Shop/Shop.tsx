@@ -8,13 +8,7 @@ import { AppRootStateType } from '../../BLL-redux/store';
 import { CardBlank } from '../../components/CardBlank';
 import { useStyles } from './index';
 
-type PropsType = {
-  products?: Array<ProductType>; // type for storybook
-  addProducts?: (value: any) => void; // type for storybook
-};
-
-export const Shop = React.memo(function (props: PropsType) {
-  console.log('render Shop');
+export const Shop = React.memo(function () {
   const classes = useStyles();
 
   const products = useSelector<AppRootStateType, Array<ProductType>>(

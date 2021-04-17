@@ -2,24 +2,24 @@ import { CircularProgress, Container, Grid } from '@material-ui/core';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { RequestStatusType } from '../../BLL-redux/auth-reducer';
 import { getProductsTC, ProductType } from '../../BLL-redux/productsReducer';
 import { AppRootStateType } from '../../BLL-redux/store';
 import { Header } from '../../components/Header';
 import { Routes } from './components/Routes';
 
 export const AppShop = React.memo(function () {
-
   const products = useSelector<AppRootStateType, Array<ProductType>>(
     (state) => state.products,
   );
 
+  const status = useSelector<AppRootStateType, RequestStatusType>(
+    (state) => state.auth.status,
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getProductsTC());
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
   }, [dispatch]);
 
   const arrPrice = useMemo(() => {
@@ -32,13 +32,11 @@ export const AppShop = React.memo(function () {
     }, 0);
   }, [arrPrice]);
 
-  const [loading, setLoading] = useState(true);
-
   return (
     <div>
       <Header totalPrice={totalPrice} />
       <Container fixed>
-        {loading ? (
+        {status === 'loading' ? (
           <Grid container justify="center">
             <CircularProgress />
           </Grid>

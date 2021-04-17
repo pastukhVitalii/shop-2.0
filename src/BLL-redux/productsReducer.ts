@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
 
 import { api } from '../api/api';
+import {setAppStatusAC} from "./auth-reducer";
 
 export type ProductType = {
   id: string;
@@ -52,6 +53,7 @@ export const getProductsTC = () => (dispatch: Dispatch) => {
   api.getProducts()
     .then((res: any) => {
       dispatch(getProductsAC(res));
+      dispatch(setAppStatusAC({status: "succeeded"}))
     })
     .catch((error) => alert(error));
 };

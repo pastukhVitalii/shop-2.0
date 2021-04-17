@@ -4,12 +4,10 @@ import thunkMiddleware from 'redux-thunk';
 
 import { authReducer } from './auth-reducer';
 import { productsReducer } from './productsReducer';
-import { userReducer } from './userReducer';
 
 const rootReducer = combineReducers({
   products: productsReducer,
   auth: authReducer,
-  user: userReducer,
 });
 
 export type RootReducerType = typeof rootReducer;

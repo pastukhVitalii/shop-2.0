@@ -103,6 +103,7 @@ export const Login = React.memo(() => {
                   color="primary"
                   type="submit"
                   className={classes.form_item}
+                  aria-labelledby='sign in'
                 >
                   Sign in
                 </Button>
@@ -111,6 +112,7 @@ export const Login = React.memo(() => {
                   variant="contained"
                   color={'primary'}
                   className={classes.form_item}
+                  aria-labelledby='sign up'
                 >
                   <NavLink style={{ color: 'white' }} to={'/register'}>
                     {' '}
@@ -123,6 +125,7 @@ export const Login = React.memo(() => {
                 color={'primary'}
                 onClick={signInWithGoogle}
                 className={classes.form_item}
+                aria-labelledby='Continue with Google'
               >
                 Continue with Google
               </Button>

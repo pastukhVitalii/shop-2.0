@@ -132,6 +132,7 @@ export const Register = React.memo(() => {
                   color="primary"
                   type="submit"
                   className={classes.form_item}
+                  aria-labelledby='create account'
                 >
                   Create Account
                 </Button>
@@ -140,6 +141,7 @@ export const Register = React.memo(() => {
                   color={'primary'}
                   onClick={signInWithGoogle}
                   className={classes.form_item}
+                  aria-labelledby='Continue with Google'
                 >
                   Continue with Google
                 </Button>

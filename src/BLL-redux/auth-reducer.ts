@@ -4,10 +4,16 @@ import { Dispatch } from 'redux';
 
 import { api } from '../api/api';
 import { UserType } from '../scenes/Login';
-import { setUserAC } from './userReducer';
 
-const initialState = {
+const initialState: InitialStateType = {
   isLoggedIn: false,
+  status: "loading",
+  user: {
+    firstName: '',
+    lastName: '',
+    email: '',
+    pass: '',
+  }
 };
 
 const slice = createSlice({
@@ -17,11 +23,23 @@ const slice = createSlice({
     setIsLoggedInAC(state, action: PayloadAction<{ value: boolean }>) {
       state.isLoggedIn = action.payload.value;
     },
+    setAppStatusAC: (state, action: PayloadAction<{ status: RequestStatusType }>) => {
+      state.status = action.payload.status
+    },
+    setUserAC(state, action: PayloadAction<{ user: UserType }>) {
+      state.user = action.payload.user
+    },
   },
 });
 
+export type RequestStatusType = 'loading' | 'succeeded'
+type InitialStateType = {
+  isLoggedIn: boolean
+  status: RequestStatusType
+  user: UserType
+}
 export const authReducer = slice.reducer;
-export const { setIsLoggedInAC } = slice.actions;
+export const { setIsLoggedInAC, setAppStatusAC, setUserAC } = slice.actions;
 
 // thunks
 export const loginTC = (user: UserType) => (dispatch: Dispatch) => {
@@ -86,4 +104,13 @@ export const registerGoogleTC = () => (dispatch: Dispatch) => {
     .catch((error) => {
       alert(error.message);
     });
+};
+
+export const initializeUserTC = () => (dispatch: Dispatch) => {
+  api.initializeUser()
+    .then((res: any) => {
+      dispatch(setUserAC({ user: res.value }));
+      dispatch(setIsLoggedInAC({ value: true }));
+    })
+    .catch((error) => alert(error))
 };

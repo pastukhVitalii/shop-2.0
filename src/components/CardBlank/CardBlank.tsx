@@ -61,6 +61,7 @@ export const CardBlank = React.memo(function (props: PropsType & CardType) {
             disabled={disable}
             startIcon={<AddShoppingCartIcon />}
             size={'large'}
+            aria-labelledby='buy'
           >
             {inCart ? 'In cart' : 'Buy'}
           </Button>

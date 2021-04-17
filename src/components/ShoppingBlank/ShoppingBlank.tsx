@@ -74,11 +74,11 @@ export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
           <Grid container justify={'center'}>
             <CardActions>
               {props.products.count > 1 ? (
-                <IconButton onClick={onDecreaseItem}>
+                <IconButton onClick={onDecreaseItem} aria-label='decrease'>
                   <Remove />
                 </IconButton>
               ) : (
-                <IconButton onClick={onDeleteItem}>
+                <IconButton onClick={onDeleteItem} aria-label='delete'>
                   <DeleteForever />
                 </IconButton>
               )}
@@ -86,6 +86,7 @@ export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
               <IconButton
                 onClick={onIncreaseItem}
                 disabled={props.products.count >= 10}
+                aria-label='increase'
               >
                 <Add />
                 {props.products.count === 10 ? (

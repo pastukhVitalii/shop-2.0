@@ -6,9 +6,8 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-import { logoutTC } from '../../BLL-redux/auth-reducer';
+import {initializeUserTC, logoutTC} from '../../BLL-redux/auth-reducer';
 import { AppRootStateType } from '../../BLL-redux/store';
-import { initializeUserTC } from '../../BLL-redux/userReducer';
 import { UserType } from '../../scenes/Login';
 import { useStyles } from './index';
 
@@ -22,7 +21,7 @@ export const Header = React.memo(function (props: PropsType) {
     (state) => state.auth.isLoggedIn,
   );
 
-  const user = useSelector<AppRootStateType, UserType>((state) => state.user);
+  const user = useSelector<AppRootStateType, UserType>((state) => state.auth.user);
 
   const dispatch = useDispatch();
 
@@ -40,7 +39,7 @@ export const Header = React.memo(function (props: PropsType) {
         <Grid container direction="row" justify="space-between">
           <div>
             <NavLink to={'/'}>
-              <IconButton className={classes.btn_header}>
+              <IconButton className={classes.btn_header} aria-label="home">
                 <HomeIcon />
               </IconButton>
             </NavLink>
@@ -49,6 +48,7 @@ export const Header = React.memo(function (props: PropsType) {
                 <Button
                   color="inherit"
                   className={classes.btn_header}
+                  aria-labelledby="log out"
                   onClick={logOutCallback}
                 >
                   Log out
@@ -60,7 +60,7 @@ export const Header = React.memo(function (props: PropsType) {
                 <Button
                   color="inherit"
                   className={classes.btn_header}
-                  onClick={logOutCallback}
+                  aria-labelledby="log in"
                 >
                   Log in
                 </Button>
@@ -68,9 +68,9 @@ export const Header = React.memo(function (props: PropsType) {
             )}
           </div>
           <div>
-            {props.totalPrice? <span>{props.totalPrice} $</span> : ''}
+            {props.totalPrice ? <span>{props.totalPrice} $</span> : ''}
             <NavLink to={'/shoppingCart'}>
-              <IconButton className={classes.btn_header}>
+              <IconButton className={classes.btn_header} aria-label="shopping cart">
                 <ShoppingCart />
               </IconButton>
             </NavLink>

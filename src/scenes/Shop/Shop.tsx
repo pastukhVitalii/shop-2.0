@@ -1,11 +1,11 @@
-import { Collapse, Grid, Paper } from '@material-ui/core';
-import { Alert } from '@material-ui/lab';
-import React, { useCallback, useState } from 'react';
+import { Grid, Paper } from '@material-ui/core';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { changeProductStatusTC, ProductType } from '../../BLL-redux/productsReducer';
 import { AppRootStateType } from '../../BLL-redux/store';
 import { CardBlank } from '../../components/CardBlank';
+import { Message } from '../../components/Message';
 import { useStyles } from './index';
 
 export const Shop = React.memo(function () {
@@ -24,22 +24,14 @@ export const Shop = React.memo(function () {
     [dispatch],
   );
 
-  const [alert, setAlert] = useState(false);
-
   return (
     <>
-      <Collapse in={alert}>
-        <Alert onClose={() => setAlert(false)}>In cart!</Alert>
-      </Collapse>
+      <Message />
       <Grid container spacing={1} justify="center">
         {products.map((p) => {
           return (
             <Paper key={p.id} className={classes.card}>
-              <CardBlank
-                products={p}
-                addProducts={changeProductStatus}
-                setAlert={setAlert}
-              />
+              <CardBlank products={p} addProducts={changeProductStatus} />
             </Paper>
           );
         })}

@@ -11,6 +11,7 @@ export type ProductType = {
   count: number;
   urlImg: string;
   inCart: boolean;
+  img: string
 };
 
 const initialState: Array<ProductType> = [];

@@ -9,17 +9,17 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Add, DeleteForever, Remove } from '@material-ui/icons';
-import React from 'react';
+import React, {useContext} from 'react';
 
 import { ProductType } from '../../BLL-redux/productsReducer';
 import { useStyles } from './index';
+import {Context, setMessageAC} from "../../context/context";
 
 export type PropsType = {
   products: ProductType;
   increaseProducts: (id: string) => void;
   decreaseProducts: (id: string) => void;
   deleteProducts: (id: string, inCart: boolean) => void;
-  setAlert: (alert: boolean) => void;
 };
 
 export type CardType = {
@@ -39,11 +39,13 @@ export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
     props.decreaseProducts(props.products.id);
   };
 
+  const { contextDispatch } = useContext<any>(Context);
+
   const onDeleteItem = () => {
     props.deleteProducts(props.products.id, props.products.inCart);
-    props.setAlert(true);
+    contextDispatch(setMessageAC(true));
     setTimeout(() => {
-      props.setAlert(false);
+      contextDispatch(setMessageAC(false));
     }, 1500);
   };
 
@@ -65,13 +67,13 @@ export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
               together with your guests. Add 1 cup of frozen peas along with the
               mussels, if you like.
             </Typography>
-            <Typography style={{ padding: '10px 0 0 10px' }}>
+            <Typography className={classes.price}>
               price: {props.products.price} $
             </Typography>
           </CardContent>
         </Grid>
         <Grid container item xs={3}>
-          <Grid container justify={'center'}>
+          <Grid container justify='center'>
             <CardActions>
               {props.products.count > 1 ? (
                 <IconButton onClick={onDecreaseItem} aria-label='decrease'>
@@ -90,7 +92,7 @@ export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
               >
                 <Add />
                 {props.products.count === 10 ? (
-                  <div style={{ color: 'tomato', fontSize: '14px' }}>
+                  <div className={classes.error}>
                     Max count !!
                   </div>
                 ) : (

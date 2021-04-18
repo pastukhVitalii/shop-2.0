@@ -70,7 +70,7 @@ export const Login = React.memo(() => {
   };
 
   if (isLoggedIn) {
-    return <Redirect to={'/'} />;
+    return <Redirect to='/' />;
   }
 
   return (
@@ -82,7 +82,7 @@ export const Login = React.memo(() => {
               <FormGroup>
                 <TextField
                   label="Email"
-                  variant={'filled'}
+                  variant='filled'
                   {...formik.getFieldProps('email')}
                   className={classes.form_item}
                 />
@@ -91,7 +91,7 @@ export const Login = React.memo(() => {
                 ) : null}
                 <TextField
                   label="Password"
-                  variant={'filled'}
+                  variant='filled'
                   {...formik.getFieldProps('pass')}
                   className={classes.form_item}
                 />
@@ -107,22 +107,21 @@ export const Login = React.memo(() => {
                 >
                   Sign in
                 </Button>
-                <Typography align={'center'}>or</Typography>
+                <Typography align='center'>or</Typography>
                 <Button
                   variant="contained"
-                  color={'primary'}
+                  color='primary'
                   className={classes.form_item}
                   aria-labelledby='sign up'
                 >
-                  <NavLink style={{ color: 'white' }} to={'/register'}>
-                    {' '}
-                    Sign up{' '}
+                  <NavLink className={classes.link} to='/register'>
+                    Sign up
                   </NavLink>
                 </Button>
               </FormGroup>
               <Button
                 variant="contained"
-                color={'primary'}
+                color='primary'
                 onClick={signInWithGoogle}
                 className={classes.form_item}
                 aria-labelledby='Continue with Google'

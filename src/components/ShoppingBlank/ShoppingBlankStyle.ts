@@ -9,4 +9,11 @@ export const useStyles = makeStyles({
     height: '100%',
     margin: '0 auto',
   },
+  error: {
+    color: 'tomato',
+    fontSize: '14px',
+  },
+  price: {
+    padding: '10px 0 0 10px'
+  }
 });

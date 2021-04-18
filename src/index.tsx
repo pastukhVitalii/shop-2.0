@@ -8,14 +8,17 @@ import reportWebVitals from './reportWebVitals';
 import { AppShop } from './scenes/AppShop';
 
 import './index.css';
+import {StoreGlobal} from "./context/context";
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <StoreGlobal>
+      <BrowserRouter>
       {/*<React.StrictMode>*/}
-      <AppShop />
+      <AppShop/>
       {/*</React.StrictMode>*/}
     </BrowserRouter>
+    </StoreGlobal>
   </Provider>,
   document.getElementById('root'),
 );

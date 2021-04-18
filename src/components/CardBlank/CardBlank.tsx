@@ -9,15 +9,15 @@ import {
   Typography,
 } from '@material-ui/core';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import React from 'react';
+import React, { useContext } from 'react';
 
 import { ProductType } from '../../BLL-redux/productsReducer';
+import { Context, setMessageAC } from '../../context/context';
 import { useStyles } from './index';
 
 export type PropsType = {
   products: ProductType;
   addProducts: (id: string, inCart: boolean) => void;
-  setAlert: (alert: boolean) => void;
 };
 export type CardType = {
   onAddItem?: (id: string, inCart: boolean) => void;
@@ -30,13 +30,16 @@ export const CardBlank = React.memo(function (props: PropsType & CardType) {
   const disable = inCart;
   const classes = useStyles();
 
+  const { contextDispatch } = useContext<any>(Context);
+
   const onAddItem = () => {
     props.addProducts(props.products.id, props.products.inCart);
-    props.setAlert(true);
+    contextDispatch(setMessageAC(true));
     setTimeout(() => {
-      props.setAlert(false);
+      contextDispatch(setMessageAC(false));
     }, 1500);
   };
+
   return (
     <Card className={classes.root}>
       <CardHeader title={props.products.title} />
@@ -45,6 +48,7 @@ export const CardBlank = React.memo(function (props: PropsType & CardType) {
         image={props.products.urlImg}
         title={props.products.title}
       />
+
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
           We is passionate about technology and driven by innovation. We dream, we
@@ -53,14 +57,14 @@ export const CardBlank = React.memo(function (props: PropsType & CardType) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Grid container justify={'space-between'} alignItems={'center'}>
+        <Grid container justify="space-between" alignItems="center">
           <Button
-            variant={'contained'}
+            variant="contained"
             onClick={onAddItem}
             color={color}
             disabled={disable}
             startIcon={<AddShoppingCartIcon />}
-            size={'large'}
+            size="large"
           >
             {inCart ? 'In cart' : 'Buy'}
           </Button>

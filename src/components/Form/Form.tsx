@@ -92,7 +92,7 @@ export const Form = function (props: PropsType) {
           <FormGroup>
             <TextField
               label="First Name"
-              variant={'filled'}
+              variant='filled'
               {...formik.getFieldProps('firstName')}
               className={classes.form_item}
             />
@@ -101,7 +101,7 @@ export const Form = function (props: PropsType) {
             ) : null}
             <TextField
               label="Last Name"
-              variant={'filled'}
+              variant='filled'
               {...formik.getFieldProps('lastName')}
               className={classes.form_item}
             />
@@ -110,14 +110,14 @@ export const Form = function (props: PropsType) {
             ) : null}
             <TextField
               label="Email"
-              variant={'filled'}
+              variant='filled'
               {...formik.getFieldProps('email')}
               className={classes.form_item}
             />
             {formik.touched.email && formik.errors.email ? <div className={classes.error} >{formik.errors.email}</div> : null}
             <TextField
               label="Phone number"
-              variant={'filled'}
+              variant='filled'
               {...formik.getFieldProps('phoneNumber')}
               className={classes.form_item}
             />

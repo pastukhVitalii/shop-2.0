@@ -14,7 +14,7 @@ import { Redirect } from 'react-router-dom';
 import { registerGoogleTC, registerTC } from '../../BLL-redux/auth-reducer';
 import { AppRootStateType } from '../../BLL-redux/store';
 import { maxLengthCreator, required } from '../../utils/validators';
-import { useStyles } from '../Login/index';
+import { useStyles } from '../Login';
 
 export const Register = React.memo(() => {
   const classes = useStyles();
@@ -82,7 +82,7 @@ export const Register = React.memo(() => {
   };
 
   if (isLoggedIn) {
-    return <Redirect to={'/'} />;
+    return <Redirect to='/' />;
   }
   return (
     <Grid container justify="center">
@@ -93,7 +93,7 @@ export const Register = React.memo(() => {
               <FormGroup>
                 <TextField
                   label="First Name"
-                  variant={'filled'}
+                  variant='filled'
                   {...formik.getFieldProps('firstName')}
                   className={classes.form_item}
                 />
@@ -102,7 +102,7 @@ export const Register = React.memo(() => {
                 ) : null}
                 <TextField
                   label="Last Name"
-                  variant={'filled'}
+                  variant='filled'
                   {...formik.getFieldProps('lastName')}
                   className={classes.form_item}
                 />
@@ -111,7 +111,7 @@ export const Register = React.memo(() => {
                 ) : null}
                 <TextField
                   label="Email"
-                  variant={'filled'}
+                  variant='filled'
                   {...formik.getFieldProps('email')}
                   className={classes.form_item}
                 />
@@ -120,7 +120,7 @@ export const Register = React.memo(() => {
                 ) : null}
                 <TextField
                   label="Password"
-                  variant={'filled'}
+                  variant='filled'
                   {...formik.getFieldProps('pass')}
                   className={classes.form_item}
                 />
@@ -138,7 +138,7 @@ export const Register = React.memo(() => {
                 </Button>
                 <Button
                   variant="contained"
-                  color={'primary'}
+                  color='primary'
                   onClick={signInWithGoogle}
                   className={classes.form_item}
                   aria-labelledby='Continue with Google'

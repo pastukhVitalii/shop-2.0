@@ -39,7 +39,7 @@ export const Header = React.memo(function (props: PropsType) {
       <AppBar color="primary" className={classes.header}>
         <Grid container direction="row" justify="space-between">
           <div>
-            <NavLink to={'/'}>
+            <NavLink to='/'>
               <IconButton className={classes.btn_header} aria-label="home">
                 <HomeIcon />
               </IconButton>
@@ -53,11 +53,11 @@ export const Header = React.memo(function (props: PropsType) {
                   onClick={logOutCallback}
                 >
                   Log out
-                </Button>{' '}
+                </Button>
                 <span>Hello {user.firstName}</span>
               </>
             ) : (
-              <NavLink to={'login'} aria-label="log in">
+              <NavLink to='login' aria-label="log in">
                 <Button color="inherit" className={classes.btn_header}>
                   Log in
                 </Button>
@@ -66,7 +66,7 @@ export const Header = React.memo(function (props: PropsType) {
           </div>
           <div>
             {props.totalPrice ? <span>{props.totalPrice} $</span> : ''}
-            <NavLink to={'/shoppingCart'}>
+            <NavLink to='/shoppingCart'>
               <IconButton className={classes.btn_header} aria-label="shopping cart">
                 <ShoppingCart />
               </IconButton>

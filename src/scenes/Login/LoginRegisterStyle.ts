@@ -12,4 +12,7 @@ export const useStyles = makeStyles({
     marginLeft: '20px',
     lineHeight: '0',
   },
+  link: {
+    color: '#ffffff',
+  },
 });

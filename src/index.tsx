@@ -1,21 +1,23 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import reportWebVitals from "./reportWebVitals";
-import { store } from "./BLL-redux/store";
-import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
-import {AppShop} from "./scenes/AppShop";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+
+import { store } from './BLL-redux/store';
+import reportWebVitals from './reportWebVitals';
+import { AppShop } from './scenes/AppShop';
+
+import './index.css';
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       {/*<React.StrictMode>*/}
-        <AppShop />
+      <AppShop />
       {/*</React.StrictMode>*/}
     </BrowserRouter>
   </Provider>,
-  document.getElementById("root")
+  document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function

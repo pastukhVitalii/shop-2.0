@@ -1,5 +1,5 @@
 import { CircularProgress, Container, Grid } from '@material-ui/core';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RequestStatusType } from '../../BLL-redux/auth-reducer';
@@ -38,10 +38,10 @@ export const AppShop = React.memo(function () {
       <Container fixed>
         {status === 'loading' ? (
           <Grid container justify="center">
-            <CircularProgress />
+            <CircularProgress aria-live="polite"/>
           </Grid>
         ) : (
-          <Routes />
+            <Routes />
         )}
       </Container>
     </div>

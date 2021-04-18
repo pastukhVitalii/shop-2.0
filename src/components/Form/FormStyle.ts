@@ -12,5 +12,9 @@ export const useStyles = makeStyles({
     color: "tomato",
     marginLeft: '20px',
     lineHeight: '0',
+  },
+  form_label: {
+    paddingLeft: '20px',
+    color: "black",
   }
 });

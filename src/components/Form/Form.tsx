@@ -87,7 +87,7 @@ export const Form = function (props: PropsType) {
       <form onSubmit={formik.handleSubmit}>
         <FormControl>
           <FormLabel>
-            <h2>Order</h2>
+            <h2 className={classes.form_label}>Order</h2>
           </FormLabel>
           <FormGroup>
             <TextField

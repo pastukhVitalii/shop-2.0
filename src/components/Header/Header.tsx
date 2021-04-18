@@ -1,12 +1,11 @@
-import { Button, Grid, IconButton } from '@material-ui/core';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
+import { AppBar, Button, Grid, IconButton } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
 import HomeIcon from '@material-ui/icons/Home';
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-import {initializeUserTC, logoutTC} from '../../BLL-redux/auth-reducer';
+import { initializeUserTC, logoutTC } from '../../BLL-redux/auth-reducer';
 import { AppRootStateType } from '../../BLL-redux/store';
 import { UserType } from '../../scenes/Login';
 import { useStyles } from './index';
@@ -20,8 +19,10 @@ export const Header = React.memo(function (props: PropsType) {
   const isLoggedIn = useSelector<AppRootStateType, boolean>(
     (state) => state.auth.isLoggedIn,
   );
-
-  const user = useSelector<AppRootStateType, UserType>((state) => state.auth.user);
+  
+  const user = useSelector<AppRootStateType, UserType>(
+    (state) => state.auth.user,
+    );
 
   const dispatch = useDispatch();
 
@@ -34,8 +35,8 @@ export const Header = React.memo(function (props: PropsType) {
   }, [dispatch]);
 
   return (
-    <div>
-      <BottomNavigation color="primary" className={classes.root} showLabels={false}>
+    <div className={classes.root}>
+      <AppBar color="primary" className={classes.header}>
         <Grid container direction="row" justify="space-between">
           <div>
             <NavLink to={'/'}>
@@ -56,12 +57,8 @@ export const Header = React.memo(function (props: PropsType) {
                 <span>Hello {user.firstName}</span>
               </>
             ) : (
-              <NavLink to={'login'}>
-                <Button
-                  color="inherit"
-                  className={classes.btn_header}
-                  aria-labelledby="log in"
-                >
+              <NavLink to={'login'} aria-label="log in">
+                <Button color="inherit" className={classes.btn_header}>
                   Log in
                 </Button>
               </NavLink>
@@ -76,7 +73,7 @@ export const Header = React.memo(function (props: PropsType) {
             </NavLink>
           </div>
         </Grid>
-      </BottomNavigation>
+      </AppBar>
     </div>
   );
 });

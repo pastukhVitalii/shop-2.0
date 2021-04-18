@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "shop2-828f9"
+    "default": "shop2-828f9",
+    "dev": "shop2-828f9"
   }
 }

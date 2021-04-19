@@ -26,7 +26,7 @@ export const Shop = React.memo(function () {
 
   return (
     <>
-      <Message />
+      <Message messageTitle="In cart!" />
       <Grid container spacing={1} justify="center">
         {products.map((p) => {
           return (

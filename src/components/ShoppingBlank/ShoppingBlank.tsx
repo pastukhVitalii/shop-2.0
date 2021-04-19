@@ -9,11 +9,11 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Add, DeleteForever, Remove } from '@material-ui/icons';
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 
 import { ProductType } from '../../BLL-redux/productsReducer';
+import { Context, setMessageAC } from '../../context/context';
 import { useStyles } from './index';
-import {Context, setMessageAC} from "../../context/context";
 
 export type PropsType = {
   products: ProductType;
@@ -28,7 +28,6 @@ export type CardType = {
 };
 
 export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
-
   const classes = useStyles();
 
   const onIncreaseItem = () => {
@@ -73,14 +72,14 @@ export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
           </CardContent>
         </Grid>
         <Grid container item xs={3}>
-          <Grid container justify='center'>
+          <Grid container justify="center">
             <CardActions>
               {props.products.count > 1 ? (
-                <IconButton onClick={onDecreaseItem} aria-label='decrease'>
+                <IconButton onClick={onDecreaseItem} aria-label="decrease">
                   <Remove />
                 </IconButton>
               ) : (
-                <IconButton onClick={onDeleteItem} aria-label='delete'>
+                <IconButton onClick={onDeleteItem} aria-label="delete">
                   <DeleteForever />
                 </IconButton>
               )}
@@ -88,13 +87,11 @@ export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
               <IconButton
                 onClick={onIncreaseItem}
                 disabled={props.products.count >= 10}
-                aria-label='increase'
+                aria-label="increase"
               >
                 <Add />
                 {props.products.count === 10 ? (
-                  <div className={classes.error}>
-                    Max count !!
-                  </div>
+                  <div className={classes.error}>Max count !!</div>
                 ) : (
                   ''
                 )}

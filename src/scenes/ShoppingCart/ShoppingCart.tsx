@@ -60,8 +60,8 @@ export const ShoppingCart = React.memo(function () {
 
   return (
     <>
-      <Message />
-      <Grid container spacing={4} justify='center'>
+      <Message messageTitle="Delete!" />
+      <Grid container spacing={4} justify="center">
         <Grid item xs={12} md={8} lg={7}>
           {cartProducts.length !== 0 ? (
             cartProducts

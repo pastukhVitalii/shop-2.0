@@ -9,7 +9,7 @@ import {
 import { useFormik } from 'formik';
 import React from 'react';
 
-import { ProductType } from '../../BLL-redux/productsReducer';
+import { ProductType } from '../../BLL-redux/products-reducer';
 import { maxLengthCreator, required } from '../../utils/validators';
 import { useStyles } from './index';
 

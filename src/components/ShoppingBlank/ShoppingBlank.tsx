@@ -11,7 +11,7 @@ import {
 import { Add, DeleteForever, Remove } from '@material-ui/icons';
 import React, { useContext } from 'react';
 
-import { ProductType } from '../../BLL-redux/productsReducer';
+import { ProductType } from '../../BLL-redux/products-reducer';
 import { Context, setMessageAC } from '../../context/context';
 import { useStyles } from './index';
 

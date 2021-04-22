@@ -7,7 +7,7 @@ import {
   changeProductStatusTC,
   deleteProductsTC,
   ProductType,
-} from '../../BLL-redux/productsReducer';
+} from '../../BLL-redux/products-reducer';
 import { AppRootStateType } from '../../BLL-redux/store';
 import { Form } from '../../components/Form';
 import { Message } from '../../components/Message';

@@ -2,7 +2,7 @@ import { Grid, Paper } from '@material-ui/core';
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { changeProductStatusTC, ProductType } from '../../BLL-redux/productsReducer';
+import { changeProductStatusTC, ProductType } from '../../BLL-redux/products-reducer';
 import { AppRootStateType } from '../../BLL-redux/store';
 import { CardBlank } from '../../components/CardBlank';
 import { Message } from '../../components/Message';

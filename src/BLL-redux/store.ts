@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 
 import { authReducer } from './auth-reducer';
-import { productsReducer } from './productsReducer';
+import { productsReducer } from './products-reducer';
 
 const rootReducer = combineReducers({
   products: productsReducer,

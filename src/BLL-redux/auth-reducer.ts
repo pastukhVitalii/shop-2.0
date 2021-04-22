@@ -5,7 +5,7 @@ import { Dispatch } from 'redux';
 import { api } from '../api/api';
 import { UserType } from '../scenes/Login';
 
-const initialState: InitialStateType = {
+const initialState: AuthStateType = {
   isLoggedIn: false,
   status: "loading",
   user: {
@@ -20,8 +20,8 @@ const slice = createSlice({
   name: 'auth',
   initialState: initialState,
   reducers: {
-    setIsLoggedInAC(state, action: PayloadAction<{ value: boolean }>) {
-      state.isLoggedIn = action.payload.value;
+    setIsLoggedInAC(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
+      state.isLoggedIn = action.payload.isLoggedIn;
     },
     setAppStatusAC: (state, action: PayloadAction<{ status: RequestStatusType }>) => {
       state.status = action.payload.status
@@ -33,7 +33,7 @@ const slice = createSlice({
 });
 
 export type RequestStatusType = 'loading' | 'succeeded'
-type InitialStateType = {
+export type AuthStateType = {
   isLoggedIn: boolean
   status: RequestStatusType
   user: UserType
@@ -46,7 +46,7 @@ export const loginTC = (user: UserType) => (dispatch: Dispatch) => {
   api
     .login(user)
     .then(() => {
-      dispatch(setIsLoggedInAC({ value: true }));
+      dispatch(setIsLoggedInAC({ isLoggedIn: true }));
     })
     .then(() => {
       dispatch(setUserAC({ user }));
@@ -58,7 +58,7 @@ export const logoutTC = () => (dispatch: Dispatch) => {
   api
     .logout()
     .then(() => {
-      dispatch(setIsLoggedInAC({ value: false }));
+      dispatch(setIsLoggedInAC({ isLoggedIn: false }));
     })
     .then(() => {
       dispatch(
@@ -81,7 +81,7 @@ export const registerTC = (user: UserType) => (dispatch: Dispatch) => {
     .then(() =>
       firebase.database().ref(`users/${firebase.auth().currentUser?.uid}`).set(user),
     )
-    .then(() => dispatch(setIsLoggedInAC({ value: true })))
+    .then(() => dispatch(setIsLoggedInAC({ isLoggedIn: true })))
     .catch((error: string) => alert(error));
 };
 
@@ -100,7 +100,7 @@ export const registerGoogleTC = () => (dispatch: Dispatch) => {
     .then(() =>
       firebase.database().ref(`users/${firebase.auth().currentUser?.uid}`).set(user),
     )
-    .then(() => dispatch(setIsLoggedInAC({ value: true })))
+    .then(() => dispatch(setIsLoggedInAC({ isLoggedIn: true })))
     .catch((error) => {
       alert(error.message);
     });
@@ -110,7 +110,7 @@ export const initializeUserTC = () => (dispatch: Dispatch) => {
   api.initializeUser()
     .then((res: any) => {
       dispatch(setUserAC({ user: res.value }));
-      dispatch(setIsLoggedInAC({ value: true }));
+      dispatch(setIsLoggedInAC({ isLoggedIn: true }));
     })
     .catch((error) => alert(error))
 };

@@ -11,7 +11,6 @@ export type ProductType = {
   count: number;
   urlImg: string;
   inCart: boolean;
-  img: string
 };
 
 const initialState: Array<ProductType> = [];
@@ -22,10 +21,10 @@ export const slice = createSlice({
   reducers: {
     changeProductStatusAC(
       state,
-      action: PayloadAction<{ id: string; inCart: boolean }>,
+      action: PayloadAction<{ id: string }>,
     ) {
       const index = state.findIndex((tl) => tl.id === action.payload.id);
-      state[index].inCart = !action.payload.inCart;
+      state[index].inCart = !state[index].inCart;
     },
     addProductAC(state, action: PayloadAction<{ id: string }>) {
       const index = state.findIndex((tl) => tl.id === action.payload.id);
@@ -64,10 +63,10 @@ export const changeProductStatusTC = (id: string, inCart: boolean) => (
 ) => {
   if (inCart) {
     dispatch(deleteProductAC({ id }));
-    dispatch(changeProductStatusAC({ id, inCart }));
+    dispatch(changeProductStatusAC({ id }));
   } else {
     dispatch(addProductAC({ id }));
-    dispatch(changeProductStatusAC({ id, inCart }));
+    dispatch(changeProductStatusAC({ id }));
   }
 };
 

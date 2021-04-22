@@ -3,7 +3,7 @@ import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { RequestStatusType } from '../../BLL-redux/auth-reducer';
-import { getProductsTC, ProductType } from '../../BLL-redux/productsReducer';
+import { getProductsTC, ProductType } from '../../BLL-redux/products-reducer';
 import { AppRootStateType } from '../../BLL-redux/store';
 import { Header } from '../../components/Header';
 import { Routes } from './components/Routes';

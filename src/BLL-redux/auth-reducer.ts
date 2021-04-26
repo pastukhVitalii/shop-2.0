@@ -1,3 +1,4 @@
+// comment: remove BLL prefix
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import firebase from 'firebase';
 import { Dispatch } from 'redux';
@@ -94,7 +95,7 @@ export const registerGoogleTC = () => (dispatch: Dispatch) => {
         firstName: res.user?.displayName?.split(' ')[0],
         lastName: res.user?.displayName?.split(' ')[1],
         email: res.user?.email || '',
-        pass: '222222',
+        pass: '222222', // comment: remove
       };
     })
     .then(() =>

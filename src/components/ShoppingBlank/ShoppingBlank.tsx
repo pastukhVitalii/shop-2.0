@@ -74,6 +74,7 @@ export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
         <Grid container item xs={3}>
           <Grid container justify="center">
             <CardActions>
+              {/* comment: 1 should be in constants */}
               {props.products.count > 1 ? (
                 <IconButton onClick={onDecreaseItem} aria-label="decrease">
                   <Remove />
@@ -90,6 +91,7 @@ export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
                 aria-label="increase"
               >
                 <Add />
+                {/* comment: 10 should be in constants */}
                 {props.products.count === 10 ? (
                   <div className={classes.error}>Max count !!</div>
                 ) : (

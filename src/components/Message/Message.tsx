@@ -8,6 +8,7 @@ type PropsType = {
   messageTitle: string
 }
 export const Message = React.memo(function (props:PropsType) {
+  // comment: remove context, keep only redux
   const { context, contextDispatch } = useContext<any>(Context);
   return (
     <Collapse in={context.message}>

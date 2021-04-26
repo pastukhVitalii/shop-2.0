@@ -1,3 +1,4 @@
+// comment: it should be scene as it's connected to the store?
 import { AppBar, Button, Grid, IconButton } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
 import HomeIcon from '@material-ui/icons/Home';

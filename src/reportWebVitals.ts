@@ -1,3 +1,5 @@
+// comment: remove unneeded files fom src/ folder
+
 import { ReportHandler } from 'web-vitals';
 
 const reportWebVitals = (onPerfEntry?: ReportHandler) => {

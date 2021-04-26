@@ -36,6 +36,7 @@ export const AppShop = React.memo(function () {
     <div>
       <Header totalPrice={totalPrice} />
       <Container fixed>
+        {/* comment: constants */}
         {status === 'loading' ? (
           <Grid container justify="center">
             <CircularProgress aria-live="polite"/>

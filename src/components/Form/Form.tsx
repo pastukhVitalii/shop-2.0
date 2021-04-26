@@ -22,12 +22,13 @@ export const Form = function (props: PropsType) {
 
   const saveProducts = (products: string) => {
     const stateAsString = JSON.stringify(products);
-    localStorage.setItem('products', stateAsString);
+    localStorage.setItem('products', stateAsString); // comment: can we use react persist for this? 
   };
   const formik = useFormik({
     validate: (values) => {
       if (!values.firstName) {
         return {
+          // comment: rename functions that return errors to getRequiredError, getMaxLengthError, etc. 
           firstName: required(values.firstName),
         };
       } else if (values.firstName.length > 15) {
@@ -48,7 +49,14 @@ export const Form = function (props: PropsType) {
         return {
           email: required(values.email),
         };
+        // comment: let's move it to the validators isEmailValid
       } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+          // comment: to constants
+          // const VALIDATION_ERRORS = {
+          //   INVALID_EMAIL: 'Invalid email'
+          //   ...
+          // }
+
         return {
           email: 'Invalid email',
         };
@@ -57,6 +65,7 @@ export const Form = function (props: PropsType) {
         return {
           phoneNumber: required(values.phoneNumber),
         };
+        // comment: let's move it to the validators
       } else if (isNaN(Number(values.phoneNumber))) {
         return {
           phoneNumber: 'Must be a number',
@@ -72,10 +81,12 @@ export const Form = function (props: PropsType) {
 
     onSubmit: (values) => {
       if (props.products.length === 0) {
+        // comment: use modal instead of alert
         alert('Cart is empty!');
       } else {
         const customer = JSON.stringify(values, null, 2);
         const products = JSON.stringify(props.products);
+        // comment: use modal instead of alert
         alert(`Order ${customer} ${products}`);
         saveProducts(products);
       }

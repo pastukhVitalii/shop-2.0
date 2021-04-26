@@ -24,10 +24,14 @@ export type CardType = {
   onDeleteItem?: () => void;
 };
 
+// const BUTTON_STYLES = {
+//   PRIMARY: 'primary',
+// }
+
 export const CardBlank = React.memo(function (props: PropsType & CardType) {
   const inCart = props.products.inCart;
-  const color = inCart ? 'secondary' : 'primary';
-  const disable = inCart;
+  const color = inCart ? 'secondary' : 'primary'; // comment: all strings should go in constants
+  const disable = inCart; // comment: do we really need two vars with the same value? 
   const classes = useStyles();
 
   const { contextDispatch } = useContext<any>(Context);
@@ -37,7 +41,7 @@ export const CardBlank = React.memo(function (props: PropsType & CardType) {
     contextDispatch(setMessageAC(true));
     setTimeout(() => {
       contextDispatch(setMessageAC(false));
-    }, 1500);
+    }, 1500); // comment: timeout should be in Message component
   };
 
   return (
@@ -66,6 +70,7 @@ export const CardBlank = React.memo(function (props: PropsType & CardType) {
             startIcon={<AddShoppingCartIcon />}
             size="large"
           >
+            {/* comment: strings to constants */}
             {inCart ? 'In cart' : 'Buy'}
           </Button>
           <span>{props.products.price} $</span>

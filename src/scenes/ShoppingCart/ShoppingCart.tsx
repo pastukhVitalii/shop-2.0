@@ -66,6 +66,7 @@ export const ShoppingCart = React.memo(function () {
           {cartProducts.length !== 0 ? (
             cartProducts
           ) : (
+            // comment: Cart
             <Typography variant="h4">Card is empty</Typography>
           )}
         </Grid>

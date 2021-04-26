@@ -1,3 +1,5 @@
+// comment: .idea, .firebase should be in .gitignore
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -14,7 +16,8 @@ ReactDOM.render(
   <Provider store={store}>
     <StoreGlobal>
       <BrowserRouter>
-      {/*<React.StrictMode>*/}
+      {/* comment: can we remove or uncomment it? */}
+      {/*<React.StrictMode>*/}  
       <AppShop/>
       {/*</React.StrictMode>*/}
     </BrowserRouter>

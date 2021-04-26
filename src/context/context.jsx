@@ -1,5 +1,6 @@
 import React, {createContext, useReducer} from "react";
 
+// comment: why do we need both redux and context? keep only redux
 const Reducer = (state, action) => {
   switch (action.type) {
     case "HANDLER_MESSAGE":

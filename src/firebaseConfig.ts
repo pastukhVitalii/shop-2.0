@@ -1,7 +1,9 @@
+// comment: let's move this file to the config/ folder
 import firebase from 'firebase/app';
 import 'firebase/database';
 import 'firebase/firestore';
 
+// comment: add a comment that we're keeping .env file in the repo for testing purposes
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,

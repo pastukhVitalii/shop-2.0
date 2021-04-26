@@ -25,7 +25,9 @@ export const store = configureStore({
 // определить автоматически тип всего объекта состояния
 export type AppRootStateType = ReturnType<RootReducerType>;
 
-// а это, чтобы можно было в консоли браузера обращаться к store в любой момент
+
+// comment: remove at all or remove in prod build
+// а это, чтобы можно было в консоли браузера обращаться к store в любой момент 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 window.store = store;

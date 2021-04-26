@@ -34,6 +34,7 @@ export const Login = React.memo(() => {
         return {
           email: required(values.email),
         };
+        // comment: to validators
       } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         return {
           email: 'Invalid email',
@@ -86,6 +87,7 @@ export const Login = React.memo(() => {
                   {...formik.getFieldProps('email')}
                   className={classes.form_item}
                 />
+                {/* comment: && */}
                 {formik.touched.email && formik.errors.email ? (
                   <div className={classes.error}>{formik.errors.email}</div>
                 ) : null}

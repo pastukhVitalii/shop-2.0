@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Dispatch } from 'redux';
 
 import { api } from '../api/api';
-import {setAppStatusAC} from "./auth-reducer";
+import { setAppStatusAC, setMessageAC } from './auth-reducer';
 
 export type ProductType = {
   id: string;
@@ -19,10 +19,7 @@ export const slice = createSlice({
   name: 'products',
   initialState: initialState,
   reducers: {
-    changeProductStatusAC(
-      state,
-      action: PayloadAction<{ id: string }>,
-    ) {
+    changeProductStatusAC(state, action: PayloadAction<{ id: string }>) {
       const index = state.findIndex((tl) => tl.id === action.payload.id);
       state[index].inCart = !state[index].inCart;
     },
@@ -50,10 +47,11 @@ export const {
 export const productsReducer = slice.reducer;
 
 export const getProductsTC = () => (dispatch: Dispatch) => {
-  api.getProducts()
+  api
+    .getProducts()
     .then((res: any) => {
       dispatch(getProductsAC(res));
-      dispatch(setAppStatusAC({status: "succeeded"}))
+      dispatch(setAppStatusAC({ status: 'succeeded' }));
     })
     .catch((error) => alert(error));
 };
@@ -67,6 +65,7 @@ export const changeProductStatusTC = (id: string, inCart: boolean) => (
   } else {
     dispatch(addProductAC({ id }));
     dispatch(changeProductStatusAC({ id }));
+    dispatch(setMessageAC({ messageStatus: true }));
   }
 };
 

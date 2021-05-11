@@ -2,16 +2,17 @@ import { Grid, Typography } from '@material-ui/core';
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { Form } from '../../components/Form';
+import { Message } from '../../components/Message';
+import { ShoppingBlank } from '../../components/ShoppingBlank';
 import {
   addProductsTC,
   changeProductStatusTC,
   deleteProductsTC,
   ProductType,
-} from '../../BLL-redux/products-reducer';
-import { AppRootStateType } from '../../BLL-redux/store';
-import { Form } from '../../components/Form';
-import { Message } from '../../components/Message';
-import { ShoppingBlank } from '../../components/ShoppingBlank';
+} from '../../redux/products-reducer';
+import { AppRootStateType } from '../../redux/store';
+
 
 export const ShoppingCart = React.memo(function () {
   const products = useSelector<AppRootStateType, Array<ProductType>>(
@@ -66,7 +67,7 @@ export const ShoppingCart = React.memo(function () {
           {cartProducts.length !== 0 ? (
             cartProducts
           ) : (
-            <Typography variant="h4">Card is empty</Typography>
+            <Typography variant="h4">Cart is empty</Typography>
           )}
         </Grid>
         <Grid item xs={12} md={4} lg={3}>

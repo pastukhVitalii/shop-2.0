@@ -9,10 +9,10 @@ import {
   Typography,
 } from '@material-ui/core';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { ProductType } from '../../BLL-redux/products-reducer';
-import { Context, setMessageAC } from '../../context/context';
+import { ProductType } from '../../redux/products-reducer';
+import { BTN_TITLE, PRIMARY, SECONDARY } from '../../utils/constants';
 import { useStyles } from './index';
 
 export type PropsType = {
@@ -26,18 +26,11 @@ export type CardType = {
 
 export const CardBlank = React.memo(function (props: PropsType & CardType) {
   const inCart = props.products.inCart;
-  const color = inCart ? 'secondary' : 'primary';
-  const disable = inCart;
+  const color = inCart ? SECONDARY : PRIMARY;
   const classes = useStyles();
-
-  const { contextDispatch } = useContext<any>(Context);
 
   const onAddItem = () => {
     props.addProducts(props.products.id, props.products.inCart);
-    contextDispatch(setMessageAC(true));
-    setTimeout(() => {
-      contextDispatch(setMessageAC(false));
-    }, 1500);
   };
 
   return (
@@ -62,11 +55,11 @@ export const CardBlank = React.memo(function (props: PropsType & CardType) {
             variant="contained"
             onClick={onAddItem}
             color={color}
-            disabled={disable}
+            disabled={inCart}
             startIcon={<AddShoppingCartIcon />}
             size="large"
           >
-            {inCart ? 'In cart' : 'Buy'}
+            {inCart ? BTN_TITLE.IN_CART : BTN_TITLE.BTN_BUY}
           </Button>
           <span>{props.products.price} $</span>
         </Grid>

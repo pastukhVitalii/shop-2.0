@@ -2,11 +2,12 @@ import { CircularProgress, Container, Grid } from '@material-ui/core';
 import React, { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { RequestStatusType } from '../../BLL-redux/auth-reducer';
-import { getProductsTC, ProductType } from '../../BLL-redux/products-reducer';
-import { AppRootStateType } from '../../BLL-redux/store';
-import { Header } from '../../components/Header';
+import { RequestStatusType } from '../../redux/auth-reducer';
+import { getProductsTC, ProductType } from '../../redux/products-reducer';
+import { AppRootStateType } from '../../redux/store';
+import { Header } from '../Header';
 import { Routes } from './components/Routes';
+import {LOADING} from "../../utils/constants";
 
 export const AppShop = React.memo(function () {
   const products = useSelector<AppRootStateType, Array<ProductType>>(
@@ -36,12 +37,12 @@ export const AppShop = React.memo(function () {
     <div>
       <Header totalPrice={totalPrice} />
       <Container fixed>
-        {status === 'loading' ? (
+        {status === LOADING ? (
           <Grid container justify="center">
-            <CircularProgress aria-live="polite"/>
+            <CircularProgress aria-live="polite" />
           </Grid>
         ) : (
-            <Routes />
+          <Routes />
         )}
       </Container>
     </div>

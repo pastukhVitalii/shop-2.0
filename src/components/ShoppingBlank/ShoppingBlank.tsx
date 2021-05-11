@@ -9,10 +9,10 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Add, DeleteForever, Remove } from '@material-ui/icons';
-import React, { useContext } from 'react';
+import React from 'react';
 
-import { ProductType } from '../../BLL-redux/products-reducer';
-import { Context, setMessageAC } from '../../context/context';
+import { ProductType } from '../../redux/products-reducer';
+import { PRODUCT_COUNT } from '../../utils/constants';
 import { useStyles } from './index';
 
 export type PropsType = {
@@ -38,14 +38,8 @@ export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
     props.decreaseProducts(props.products.id);
   };
 
-  const { contextDispatch } = useContext<any>(Context);
-
   const onDeleteItem = () => {
     props.deleteProducts(props.products.id, props.products.inCart);
-    contextDispatch(setMessageAC(true));
-    setTimeout(() => {
-      contextDispatch(setMessageAC(false));
-    }, 1500);
   };
 
   return (
@@ -74,7 +68,7 @@ export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
         <Grid container item xs={3}>
           <Grid container justify="center">
             <CardActions>
-              {props.products.count > 1 ? (
+              {props.products.count > PRODUCT_COUNT.MIN ? (
                 <IconButton onClick={onDecreaseItem} aria-label="decrease">
                   <Remove />
                 </IconButton>
@@ -86,11 +80,11 @@ export const ShoppingBlank = React.memo(function (props: PropsType & CardType) {
               <div>{props.products.count}</div>
               <IconButton
                 onClick={onIncreaseItem}
-                disabled={props.products.count >= 10}
+                disabled={props.products.count >= PRODUCT_COUNT.MAX}
                 aria-label="increase"
               >
                 <Add />
-                {props.products.count === 10 ? (
+                {props.products.count === PRODUCT_COUNT.MAX ? (
                   <div className={classes.error}>Max count !!</div>
                 ) : (
                   ''

@@ -8,6 +8,7 @@ export const useStyles = makeStyles({
   media: {
     height: '100%',
     margin: '0 auto',
+    backgroundSize: 'contain',
   },
   error: {
     color: 'tomato',

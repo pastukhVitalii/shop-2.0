@@ -7,13 +7,14 @@ import { UserType } from '../scenes/Login';
 
 const initialState: AuthStateType = {
   isLoggedIn: false,
-  status: "loading",
+  status: 'loading',
   user: {
     firstName: '',
     lastName: '',
     email: '',
     pass: '',
-  }
+  },
+  messageStatus: false,
 };
 
 const slice = createSlice({
@@ -23,23 +24,35 @@ const slice = createSlice({
     setIsLoggedInAC(state, action: PayloadAction<{ isLoggedIn: boolean }>) {
       state.isLoggedIn = action.payload.isLoggedIn;
     },
-    setAppStatusAC: (state, action: PayloadAction<{ status: RequestStatusType }>) => {
-      state.status = action.payload.status
+    setAppStatusAC: (
+      state,
+      action: PayloadAction<{ status: RequestStatusType }>,
+    ) => {
+      state.status = action.payload.status;
     },
     setUserAC(state, action: PayloadAction<{ user: UserType }>) {
-      state.user = action.payload.user
+      state.user = action.payload.user;
+    },
+    setMessageAC(state, action: PayloadAction<{ messageStatus: boolean }>) {
+      state.messageStatus = action.payload.messageStatus;
     },
   },
 });
 
-export type RequestStatusType = 'loading' | 'succeeded'
+export type RequestStatusType = 'loading' | 'succeeded';
 export type AuthStateType = {
-  isLoggedIn: boolean
-  status: RequestStatusType
-  user: UserType
-}
+  isLoggedIn: boolean;
+  status: RequestStatusType;
+  user: UserType;
+  messageStatus: boolean;
+};
 export const authReducer = slice.reducer;
-export const { setIsLoggedInAC, setAppStatusAC, setUserAC } = slice.actions;
+export const {
+  setIsLoggedInAC,
+  setAppStatusAC,
+  setUserAC,
+  setMessageAC,
+} = slice.actions;
 
 // thunks
 export const loginTC = (user: UserType) => (dispatch: Dispatch) => {
@@ -94,7 +107,7 @@ export const registerGoogleTC = () => (dispatch: Dispatch) => {
         firstName: res.user?.displayName?.split(' ')[0],
         lastName: res.user?.displayName?.split(' ')[1],
         email: res.user?.email || '',
-        pass: '222222',
+        pass: '',
       };
     })
     .then(() =>
@@ -107,10 +120,11 @@ export const registerGoogleTC = () => (dispatch: Dispatch) => {
 };
 
 export const initializeUserTC = () => (dispatch: Dispatch) => {
-  api.initializeUser()
+  api
+    .initializeUser()
     .then((res: any) => {
       dispatch(setUserAC({ user: res.value }));
       dispatch(setIsLoggedInAC({ isLoggedIn: true }));
     })
-    .catch((error) => alert(error))
+    .catch((error) => alert(error));
 };

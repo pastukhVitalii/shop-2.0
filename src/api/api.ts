@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 
-import { ref } from '../firebaseConfig';
+import { ref } from '../config/firebaseConfig';
 import { UserType } from '../scenes/Login';
 
 const googleProvider = new firebase.auth.GoogleAuthProvider();

@@ -5,9 +5,9 @@ import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-import { initializeUserTC, logoutTC } from '../../BLL-redux/auth-reducer';
-import { AppRootStateType } from '../../BLL-redux/store';
-import { UserType } from '../../scenes/Login';
+import { initializeUserTC, logoutTC } from '../../redux/auth-reducer';
+import { AppRootStateType } from '../../redux/store';
+import { UserType } from '../Login';
 import { useStyles } from './index';
 
 type PropsType = {

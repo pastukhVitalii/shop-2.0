@@ -12,10 +12,11 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, Redirect } from 'react-router-dom';
 
-import { loginTC, registerGoogleTC } from '../../BLL-redux/auth-reducer';
-import { AppRootStateType } from '../../BLL-redux/store';
-import { maxLengthCreator, required } from '../../utils/validators';
+import { loginTC, registerGoogleTC } from '../../redux/auth-reducer';
+import { AppRootStateType } from '../../redux/store';
+import {getEmailError, getMaxLengthError, getRequiredError} from '../../utils/validators';
 import { useStyles } from './index';
+import {MAX_FIELD_LENGTH, VALIDATION_ERRORS} from "../../utils/constants";
 
 export type UserType = {
   email: string;
@@ -30,22 +31,22 @@ export const Login = React.memo(() => {
 
   const formik = useFormik({
     validate: (values) => {
-      if (!values.email) {
+      if (getRequiredError(values.email)) {
         return {
-          email: required(values.email),
+          email: VALIDATION_ERRORS.REQUIRED_FIELD,
         };
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      } else if (getEmailError(values.email)) {
         return {
-          email: 'Invalid email',
+          email: VALIDATION_ERRORS.INVALID_EMAIL,
         };
       }
-      if (!values.pass) {
+      if (getRequiredError(values.pass)) {
         return {
-          pass: required(values.pass),
+          pass: VALIDATION_ERRORS.REQUIRED_FIELD,
         };
-      } else if (values.pass.length > 15) {
+      } else if (getMaxLengthError(values.pass, MAX_FIELD_LENGTH)) {
         return {
-          pass: maxLengthCreator(values.pass, 15),
+          pass: VALIDATION_ERRORS.MAX_LENGTH(MAX_FIELD_LENGTH),
         };
       }
     },
@@ -86,18 +87,18 @@ export const Login = React.memo(() => {
                   {...formik.getFieldProps('email')}
                   className={classes.form_item}
                 />
-                {formik.touched.email && formik.errors.email ? (
+                {formik.touched.email && formik.errors.email && (
                   <div className={classes.error}>{formik.errors.email}</div>
-                ) : null}
+                )}
                 <TextField
                   label="Password"
                   variant='filled'
                   {...formik.getFieldProps('pass')}
                   className={classes.form_item}
                 />
-                {formik.touched.pass && formik.errors.pass ? (
+                {formik.touched.pass && formik.errors.pass && (
                   <div className={classes.error}>{formik.errors.pass}</div>
-                ) : null}
+                )}
                 <Button
                   variant="contained"
                   color="primary"

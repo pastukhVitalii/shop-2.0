@@ -9,8 +9,15 @@ import {
 import { useFormik } from 'formik';
 import React from 'react';
 
-import { ProductType } from '../../BLL-redux/products-reducer';
-import { maxLengthCreator, required } from '../../utils/validators';
+import { ProductType } from '../../redux/products-reducer';
+import { MAX_FIELD_LENGTH, VALIDATION_ERRORS } from '../../utils/constants';
+import {
+  getEmailError,
+  getMaxLengthError,
+  getNumberError,
+  getRequiredError,
+} from '../../utils/validators';
+import { MyModal } from '../Modal';
 import { useStyles } from './index';
 
 type PropsType = {
@@ -20,46 +27,45 @@ type PropsType = {
 export const Form = function (props: PropsType) {
   const classes = useStyles();
 
-  const saveProducts = (products: string) => {
-    const stateAsString = JSON.stringify(products);
-    localStorage.setItem('products', stateAsString);
-  };
+  const [open, setOpen] = React.useState<boolean>(false);
+
+  const [modalContent, setModalContent] = React.useState<string>('');
   const formik = useFormik({
     validate: (values) => {
-      if (!values.firstName) {
+      if (getRequiredError(values.firstName)) {
         return {
-          firstName: required(values.firstName),
+          firstName: VALIDATION_ERRORS.REQUIRED_FIELD,
         };
-      } else if (values.firstName.length > 15) {
+      } else if (getMaxLengthError(values.firstName, MAX_FIELD_LENGTH)) {
         return {
-          firstName: maxLengthCreator(values.firstName, 15),
-        };
-      }
-      if (!values.lastName) {
-        return {
-          lastName: required(values.lastName),
-        };
-      } else if (values.lastName.length > 15) {
-        return {
-          lastName: maxLengthCreator(values.lastName, 15),
+          firstName: VALIDATION_ERRORS.MAX_LENGTH(MAX_FIELD_LENGTH),
         };
       }
-      if (!values.email) {
+      if (getRequiredError(values.lastName)) {
         return {
-          email: required(values.email),
+          lastName: VALIDATION_ERRORS.REQUIRED_FIELD,
         };
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      } else if (getMaxLengthError(values.lastName, MAX_FIELD_LENGTH)) {
         return {
-          email: 'Invalid email',
+          lastName: VALIDATION_ERRORS.MAX_LENGTH(MAX_FIELD_LENGTH),
         };
       }
-      if (!values.phoneNumber) {
+      if (getRequiredError(values.email)) {
         return {
-          phoneNumber: required(values.phoneNumber),
+          email: VALIDATION_ERRORS.REQUIRED_FIELD,
         };
-      } else if (isNaN(Number(values.phoneNumber))) {
+      } else if (getEmailError(values.email)) {
         return {
-          phoneNumber: 'Must be a number',
+          email: VALIDATION_ERRORS.INVALID_EMAIL,
+        };
+      }
+      if (getRequiredError(values.phoneNumber)) {
+        return {
+          phoneNumber: VALIDATION_ERRORS.REQUIRED_FIELD,
+        };
+      } else if (getNumberError(values.phoneNumber)) {
+        return {
+          phoneNumber: VALIDATION_ERRORS.PHONE_NUMBER,
         };
       }
     },
@@ -72,18 +78,20 @@ export const Form = function (props: PropsType) {
 
     onSubmit: (values) => {
       if (props.products.length === 0) {
-        alert('Cart is empty!');
+        setModalContent('Cart is empty!');
+        setOpen(true);
       } else {
         const customer = JSON.stringify(values, null, 2);
-        const products = JSON.stringify(props.products);
-        alert(`Order ${customer} ${products}`);
-        saveProducts(products);
+        const products = JSON.stringify(props.products, null, 2);
+        setModalContent(`Order ${customer}, \n products ${products}`);
+        setOpen(true);
       }
     },
   });
 
   return (
     <Paper className={classes.root}>
+      <MyModal open={open} setOpen={setOpen} modalContent={modalContent} />
       <form onSubmit={formik.handleSubmit}>
         <FormControl>
           <FormLabel>
@@ -92,44 +100,46 @@ export const Form = function (props: PropsType) {
           <FormGroup>
             <TextField
               label="First Name"
-              variant='filled'
+              variant="filled"
               {...formik.getFieldProps('firstName')}
               className={classes.form_item}
             />
-            {formik.touched.firstName && formik.errors.firstName ? (
+            {formik.touched.firstName && formik.errors.firstName && (
               <div className={classes.error}>{formik.errors.firstName}</div>
-            ) : null}
+            )}
             <TextField
               label="Last Name"
-              variant='filled'
+              variant="filled"
               {...formik.getFieldProps('lastName')}
               className={classes.form_item}
             />
-            {formik.touched.lastName && formik.errors.lastName ? (
+            {formik.touched.lastName && formik.errors.lastName && (
               <div className={classes.error}>{formik.errors.lastName}</div>
-            ) : null}
+            )}
             <TextField
               label="Email"
-              variant='filled'
+              variant="filled"
               {...formik.getFieldProps('email')}
               className={classes.form_item}
             />
-            {formik.touched.email && formik.errors.email ? <div className={classes.error} >{formik.errors.email}</div> : null}
+            {formik.touched.email && formik.errors.email && (
+              <div className={classes.error}>{formik.errors.email}</div>
+            )}
             <TextField
               label="Phone number"
-              variant='filled'
+              variant="filled"
               {...formik.getFieldProps('phoneNumber')}
               className={classes.form_item}
             />
-            {formik.touched.phoneNumber && formik.errors.phoneNumber ? (
+            {formik.touched.phoneNumber && formik.errors.phoneNumber && (
               <div className={classes.error}>{formik.errors.phoneNumber}</div>
-            ) : null}
+            )}
             <Button
               variant="contained"
               color="primary"
               type="submit"
               className={classes.form_item}
-              aria-labelledby='order'
+              aria-labelledby="order"
             >
               Send
             </Button>

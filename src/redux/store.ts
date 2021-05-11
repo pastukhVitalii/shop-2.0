@@ -1,31 +1,32 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import thunkMiddleware from 'redux-thunk';
 
 import { authReducer } from './auth-reducer';
 import { productsReducer } from './products-reducer';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+};
 
 const rootReducer = combineReducers({
   products: productsReducer,
   auth: authReducer,
 });
 
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 export type RootReducerType = typeof rootReducer;
 
 export const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: ['products/addProductAC', 'products/deleteProductAC'],
-      },
-    }).prepend(thunkMiddleware),
+  reducer: persistedReducer,
+  middleware: [thunkMiddleware],
 });
+
+export const persistor = persistStore(store);
 
 // определить автоматически тип всего объекта состояния
 export type AppRootStateType = ReturnType<RootReducerType>;
-
-// а это, чтобы можно было в консоли браузера обращаться к store в любой момент
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-window.store = store;
